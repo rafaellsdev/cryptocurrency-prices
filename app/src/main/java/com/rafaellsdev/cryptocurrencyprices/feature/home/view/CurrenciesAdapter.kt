@@ -1,10 +1,13 @@
 package com.rafaellsdev.cryptocurrencyprices.feature.home.view
 
+import android.icu.number.NumberFormatter.with
+import android.icu.number.NumberRangeFormatter.with
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.rafaellsdev.cryptocurrencyprices.commons.model.Currency
 import com.rafaellsdev.cryptocurrencyprices.databinding.CryptoCurrencyItemBinding
+import com.squareup.picasso.Picasso
 
 class CurrenciesAdapter(
     private val currenciesList: List<Currency>,
@@ -32,6 +35,10 @@ class CurrenciesAdapter(
         RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(currency: Currency) {
             itemBinding.txtCurrencyName.text = currency.name
+            itemBinding.txtCurrencyPrice.text = currency.currentPrice.toString()
+            itemBinding.txtCurrencyPriceChangePercentage.text = currency.priceChangePercentage.toString()
+            itemBinding.imgCurrencyIcon
+            Picasso.get().load(currency.image).into(itemBinding.imgCurrencyIcon)
         }
 
     }
