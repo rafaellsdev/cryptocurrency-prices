@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.HomeActivity">
+    tools:context=".feature.home.view.HomeActivity">
 
-    <com.rafaellsdev.cryptocurrencyprices.view.components.CurrencyHeader
+    <com.rafaellsdev.cryptocurrencyprices.feature.home.view.components.CurrencyHeader
         android:layout_width="match_parent"
         android:id="@+id/toolbar"
         android:layout_height="wrap_content"

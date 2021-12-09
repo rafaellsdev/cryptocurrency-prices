@@ -1,4 +1,4 @@
-package com.rafaellsdev.cryptocurrencyprices.view
+package com.rafaellsdev.cryptocurrencyprices.feature.home.view
 
 import android.os.Bundle
 import androidx.activity.viewModels

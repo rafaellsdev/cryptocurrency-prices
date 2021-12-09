@@ -3,8 +3,12 @@ package com.rafaellsdev.cryptocurrencyprices.feature.home.repository.model
 import com.google.gson.annotations.SerializedName
 
 data class CurrencyResponse(
-    @SerializedName("id")
     val id: String?,
-    @SerializedName("symbol")
-    val symbol: String?
+    val symbol: String?,
+    val name: String?,
+    val image: String?,
+    @SerializedName("current_price")
+    val currentPrice: Double?,
+    @SerializedName("price_change_percentage_24h")
+    val priceChangePercentage: Float?
 )

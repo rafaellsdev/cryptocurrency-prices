@@ -1,4 +1,4 @@
-package com.rafaellsdev.cryptocurrencyprices.view.components
+package com.rafaellsdev.cryptocurrencyprices.feature.home.view.components
 
 import android.content.Context
 import android.util.AttributeSet
