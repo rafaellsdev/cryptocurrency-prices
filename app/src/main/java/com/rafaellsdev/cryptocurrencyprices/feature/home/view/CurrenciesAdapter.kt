@@ -1,39 +1,38 @@
 package com.rafaellsdev.cryptocurrencyprices.feature.home.view
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.rafaellsdev.cryptocurrencyprices.R
 import com.rafaellsdev.cryptocurrencyprices.commons.model.Currency
+import com.rafaellsdev.cryptocurrencyprices.databinding.CryptoCurrencyItemBinding
 
 class CurrenciesAdapter(
-    private val driversList: List<Currency>,
+    private val currenciesList: List<Currency>,
     val clickListener: (Currency, Int) -> Unit
 ) :
     RecyclerView.Adapter<CurrenciesAdapter.ViewHolder>() {
 
     var onItemClick: ((Currency) -> Unit)? = null
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(
-            R.layout.crypto_currency_item,
-            parent, false
-        )
-        return ViewHolder(itemView)
+
+        val itemBinding =
+            CryptoCurrencyItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(itemBinding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentItem = driversList[position]
-        holder.name.text = currentItem.name
-        holder.itemView.setOnClickListener { clickListener(currentItem, position) }
+        val currentItem = currenciesList[position]
+        holder.bind(currentItem)
     }
 
-    override fun getItemCount(): Int = driversList.size
+    override fun getItemCount(): Int = currenciesList.size
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val name: TextView = itemView.findViewById(R.id.txt_currency_name)
+    inner class ViewHolder(private val itemBinding: CryptoCurrencyItemBinding) :
+        RecyclerView.ViewHolder(itemBinding.root) {
+        fun bind(currency: Currency) {
+            itemBinding.txtCurrencyName.text = currency.name
+        }
+
     }
 }
