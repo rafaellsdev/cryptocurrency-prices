@@ -10,7 +10,7 @@ data class CurrencyResponse(
     @SerializedName("current_price")
     val currentPrice: Double?,
     @SerializedName("price_change_percentage_24h")
-    val priceChangePercentage: Float?,
+    val priceChangePercentage: Double?,
     @SerializedName("high_24h")
     val highPrice: Double?,
     @SerializedName("low_24h")

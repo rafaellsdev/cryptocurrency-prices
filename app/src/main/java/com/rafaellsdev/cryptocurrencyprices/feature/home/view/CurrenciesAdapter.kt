@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.rafaellsdev.cryptocurrencyprices.commons.model.Currency
 import com.rafaellsdev.cryptocurrencyprices.databinding.CryptoCurrencyItemBinding
 import com.squareup.picasso.Picasso
-import java.text.DecimalFormat
 import java.text.NumberFormat
 
 class CurrenciesAdapter(
@@ -14,8 +13,6 @@ class CurrenciesAdapter(
     val clickListener: (Currency, Int) -> Unit
 ) :
     RecyclerView.Adapter<CurrenciesAdapter.ViewHolder>() {
-
-    var onItemClick: ((Currency) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -37,7 +34,8 @@ class CurrenciesAdapter(
         fun bind(currency: Currency) {
             itemBinding.txtCurrencyName.text = currency.name
             itemBinding.txtCurrencyPrice.text = formatPrice(currency.currentPrice)
-            itemBinding.txtCurrencyPriceChangePercentage.text = String.format("%.2f", currency.priceChangePercentage) + "%"
+            itemBinding.txtCurrencyPriceChangePercentage.text =
+                String.format("%.2f", currency.priceChangePercentage) + "%"
             itemBinding.imgCurrencyIcon
             Picasso.get().load(currency.image).into(itemBinding.imgCurrencyIcon)
         }

@@ -1,26 +1,19 @@
 package com.rafaellsdev.cryptocurrencyprices.feature.home.repository.mapper
 
-import com.rafaellsdev.cryptocurrencyprices.commons.ext.orZero
+import com.rafaellsdev.cryptocurrencyprices.commons.ext.doubleOrZero
 import com.rafaellsdev.cryptocurrencyprices.commons.model.Currency
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.model.CurrencyResponse
 
-fun List<CurrencyResponse>.toCurrencyList(): List<Currency> {
-    val currencyList = mutableListOf<Currency>()
-
-    this.forEach {
-        currencyList.add(
-            Currency(
-                id = it.id.orEmpty(),
-                symbol = it.symbol.orEmpty(),
-                name = it.name.orEmpty(),
-                image = it.image.orEmpty(),
-                currentPrice = it.currentPrice.orZero(),
-                priceChangePercentage = it.priceChangePercentage.orZero(),
-                highPrice = it.highPrice.orZero(),
-                lowPrice = it.lowPrice.orZero()
-            )
+fun List<CurrencyResponse>.toCurrencyList() =
+    this.map {
+        Currency(
+            id = it.id.orEmpty(),
+            symbol = it.symbol.orEmpty(),
+            name = it.name.orEmpty(),
+            image = it.image.orEmpty(),
+            currentPrice = it.currentPrice.doubleOrZero(),
+            priceChangePercentage = it.priceChangePercentage.doubleOrZero(),
+            highPrice = it.highPrice.doubleOrZero(),
+            lowPrice = it.lowPrice.doubleOrZero()
         )
     }
-
-    return currencyList
-}
