@@ -12,7 +12,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.rafaellsdev.cryptocurrencyprices.commons.ext.onClick
 import com.rafaellsdev.cryptocurrencyprices.commons.model.Currency
 import com.rafaellsdev.cryptocurrencyprices.databinding.CurrencyDetailsBottomSheetBinding
-import com.squareup.picasso.Picasso
+import java.text.NumberFormat
+import java.util.Currency.getInstance
 
 class CurrencyDetailsBottomSheet private constructor() {
 
@@ -64,12 +65,18 @@ private class CurrencyDetailsBottomSheetView @JvmOverloads constructor(
     ) {
         binding.imgClose.onClick(dismissAction)
         binding.bottomSheetCurrencyName.text = currency?.name ?: ""
-        binding.bottomSheetPriceValue.text = currency?.currentPrice.toString()
-        binding.bottomSheetHighestPriceValue.text = currency?.highPrice.toString()
-        binding.bottomSheetLowestPriceValue.text = currency?.lowPrice.toString()
-//        Picasso.get().load(currency?.image).into(binding.bottomSheetCurrencyImage)
+        binding.bottomSheetPriceValue.text = formatPrice(currency?.currentPrice)
+        binding.bottomSheetHighestPriceValue.text = formatPrice(currency?.highPrice)
+        binding.bottomSheetLowestPriceValue.text = formatPrice(currency?.lowPrice)
 
         setHeight(fullExpand)
+    }
+
+    private fun formatPrice(price: Any?): String {
+        val format: NumberFormat = NumberFormat.getCurrencyInstance()
+        format.maximumFractionDigits = 0
+        format.currency = getInstance("EUR")
+        return format.format(price)
     }
 
 
