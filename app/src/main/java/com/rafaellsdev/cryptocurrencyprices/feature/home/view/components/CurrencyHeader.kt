@@ -3,15 +3,15 @@ package com.rafaellsdev.cryptocurrencyprices.feature.home.view.components
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.RelativeLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.rafaellsdev.cryptocurrencyprices.R
 import com.rafaellsdev.cryptocurrencyprices.databinding.CurrencyHeaderBinding
 
 class CurrencyHeader @JvmOverloads constructor(
-    context: Context?,
+    context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : RelativeLayout(context, attrs, defStyleAttr) {
+) : ConstraintLayout(context, attrs, defStyleAttr) {
 
     private val binding by lazy {
         CurrencyHeaderBinding.inflate(
