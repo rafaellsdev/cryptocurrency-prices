@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cst_content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bottom_sheet_rounded_background">
+
+    <ImageView
+        android:id="@+id/img_close"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_close"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/bottom_sheet_currency_image"
+        android:layout_width="0dp"
+        android:layout_height="96dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/sport_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_close" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="120dp"
+        android:src="@drawable/footballer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_close" />
+
+    <TextView
+        android:id="@+id/bottom_sheet_currency_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Currency name"
+        android:textColor="@color/primary_brand_color"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_currency_image" />
+
+    <TextView
+        android:id="@+id/bottom_sheet_currency_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Price: "
+        android:textColor="@color/dark_gray"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/bottom_sheet_currency_name"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_currency_name" />
+
+    <TextView
+        android:id="@+id/bottom_sheet_high_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Highest price within 24 hours: "
+        android:textColor="@color/dark_gray"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/bottom_sheet_currency_price"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_currency_price" />
+
+    <TextView
+        android:id="@+id/bottom_sheet_low_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lowest price within 24 hours: "
+        android:textColor="@color/dark_gray"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/bottom_sheet_high_price"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_high_price" />
+
+    <TextView
+        android:id="@+id/bottom_sheet_price_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/bottom_sheet_currency_price"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_currency_name"
+        tools:text="Price" />
+
+    <TextView
+        android:id="@+id/bottom_sheet_highest_price_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/bottom_sheet_high_price"
+        app:layout_constraintTop_toTopOf="@+id/bottom_sheet_high_price"
+        tools:text="Highest price" />
+
+    <TextView
+        android:id="@+id/bottom_sheet_lowest_price_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/bottom_sheet_low_price"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_highest_price_value"
+        tools:text="Lowest price" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
