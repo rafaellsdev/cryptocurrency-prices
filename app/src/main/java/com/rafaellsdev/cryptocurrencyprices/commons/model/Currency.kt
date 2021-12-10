@@ -6,5 +6,7 @@ data class Currency(
     val name: String?,
     val image: String?,
     val currentPrice: Any,
-    val priceChangePercentage: Any
+    val priceChangePercentage: Any,
+    val highPrice: Any,
+    val lowPrice: Any,
 )

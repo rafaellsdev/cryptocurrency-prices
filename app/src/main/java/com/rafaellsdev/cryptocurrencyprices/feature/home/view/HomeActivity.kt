@@ -50,7 +50,7 @@ class HomeActivity : AppCompatActivity() {
             rcvCurrency.setHasFixedSize(true)
             rcvCurrency.adapter =
                 CurrenciesAdapter(currencies) { item: Currency, _: Int ->
-                    configureCurrencyBottomSheet()
+                    configureCurrencyBottomSheet(item)
                 }
         }
     }
@@ -59,21 +59,22 @@ class HomeActivity : AppCompatActivity() {
         viewModel.discoverCurrencies()
     }
 
-    private fun configureCurrencyBottomSheet() {
+    private fun configureCurrencyBottomSheet(currency: Currency) {
         hideBottomSheet()
 
-        val dialog = createCurrencyBottomSheet()
+        val dialog = createCurrencyBottomSheet(currency)
         dialog.show()
 
         currencyDiaolg = dialog
     }
 
-    private fun createCurrencyBottomSheet(): BottomSheetDialog {
+    private fun createCurrencyBottomSheet(currency: Currency): BottomSheetDialog {
 
         return CurrencyDetailsBottomSheet.createDialog(
             this,
             dismissAction = ::hideBottomSheet,
-            fullExpand = false
+            fullExpand = false,
+            currency = currency
         )
     }
 

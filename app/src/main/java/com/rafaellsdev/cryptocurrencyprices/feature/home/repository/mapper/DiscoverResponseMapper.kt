@@ -16,7 +16,8 @@ fun List<CurrencyResponse>.toCurrencyList(): List<Currency> {
                 image = it.image.orEmpty(),
                 currentPrice = it.currentPrice.orZero(),
                 priceChangePercentage = it.priceChangePercentage.orZero(),
-
+                highPrice = it.highPrice.orZero(),
+                lowPrice = it.lowPrice.orZero()
             )
         )
     }

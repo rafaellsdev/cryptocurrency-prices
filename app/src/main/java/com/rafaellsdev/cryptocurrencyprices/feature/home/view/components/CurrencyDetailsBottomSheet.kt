@@ -10,7 +10,9 @@ import android.widget.RelativeLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.rafaellsdev.cryptocurrencyprices.commons.ext.onClick
+import com.rafaellsdev.cryptocurrencyprices.commons.model.Currency
 import com.rafaellsdev.cryptocurrencyprices.databinding.CurrencyDetailsBottomSheetBinding
+import com.squareup.picasso.Picasso
 
 class CurrencyDetailsBottomSheet private constructor() {
 
@@ -19,11 +21,12 @@ class CurrencyDetailsBottomSheet private constructor() {
         fun createDialog(
             context: Context,
             dismissAction: () -> Unit,
-            fullExpand: Boolean = false
+            fullExpand: Boolean = false,
+            currency: Currency? = null
         ): BottomSheetDialog {
 
             val contentView = CurrencyDetailsBottomSheetView(context).apply {
-                configure(dismissAction, fullExpand)
+                configure(dismissAction, fullExpand, currency)
             }
 
             val dialog = BottomSheetDialog(context)
@@ -56,9 +59,15 @@ private class CurrencyDetailsBottomSheetView @JvmOverloads constructor(
 
     fun configure(
         dismissAction: () -> Unit,
-        fullExpand: Boolean = false
+        fullExpand: Boolean = false,
+        currency: Currency?
     ) {
         binding.imgClose.onClick(dismissAction)
+        binding.bottomSheetCurrencyName.text = currency?.name ?: ""
+        binding.bottomSheetPriceValue.text = currency?.currentPrice.toString()
+        binding.bottomSheetHighestPriceValue.text = currency?.highPrice.toString()
+        binding.bottomSheetLowestPriceValue.text = currency?.lowPrice.toString()
+//        Picasso.get().load(currency?.image).into(binding.bottomSheetCurrencyImage)
 
         setHeight(fullExpand)
     }
