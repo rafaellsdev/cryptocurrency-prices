@@ -1,5 +1,6 @@
 package com.rafaellsdev.cryptocurrencyprices.feature.home.viewmodel
 
+import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -27,6 +28,7 @@ class HomeViewModel @ViewModelInject constructor(
     }
 
     private fun handleError(error: DefaultError) {
+        Log.e(TAG, error.errorMessage)
         mutableLiveDataState.emit(HomeViewState.Failure)
     }
 }

@@ -45,10 +45,10 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun showCurrencyList(currencies: List<Currency>) {
-        with(binding) {
-            rcvCurrency.layoutManager = LinearLayoutManager(this.cstContent.context)
-            rcvCurrency.setHasFixedSize(true)
-            rcvCurrency.adapter =
+        with(binding.rcvCurrency) {
+            layoutManager = LinearLayoutManager(binding.cstContent.context)
+            setHasFixedSize(true)
+            adapter =
                 CurrenciesAdapter(currencies) { item: Currency ->
                     configureCurrencyBottomSheet(item)
                 }
