@@ -43,9 +43,9 @@
         android:id="@+id/txt_currency_price_change_percentage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/img_currency_icon"
         app:layout_constraintEnd_toEndOf="@+id/txt_currency_name"
         app:layout_constraintStart_toStartOf="@+id/txt_currency_name"
+        app:layout_constraintTop_toBottomOf="@+id/txt_currency_price"
         tools:text="Price change percentage" />
 
     <View
