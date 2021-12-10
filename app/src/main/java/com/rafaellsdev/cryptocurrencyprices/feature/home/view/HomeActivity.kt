@@ -4,9 +4,11 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.rafaellsdev.cryptocurrencyprices.commons.ext.observe
 import com.rafaellsdev.cryptocurrencyprices.commons.model.Currency
 import com.rafaellsdev.cryptocurrencyprices.databinding.HomeActivityBinding
+import com.rafaellsdev.cryptocurrencyprices.feature.home.view.components.CurrencyDetailsBottomSheet
 import com.rafaellsdev.cryptocurrencyprices.feature.home.viewmodel.HomeViewModel
 import com.rafaellsdev.cryptocurrencyprices.feature.home.viewmodel.state.HomeViewState
 import dagger.hilt.android.AndroidEntryPoint
@@ -15,6 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
     private val binding by lazy { HomeActivityBinding.inflate(layoutInflater) }
     private val viewModel: HomeViewModel by viewModels()
+    private var currencyDiaolg: BottomSheetDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +28,7 @@ class HomeActivity : AppCompatActivity() {
         requestHomeData()
     }
 
-    private fun setListeners(){
+    private fun setListeners() {
         binding.toolbar.setOnClickListener {
             onBackPressed()
         }
@@ -35,31 +38,49 @@ class HomeActivity : AppCompatActivity() {
         observe(viewModel.homeViewState) {
             when (it) {
                 is HomeViewState.Loading -> println("loading")
-                is HomeViewState.Success -> showNames(it.currencies)
+                is HomeViewState.Success -> showCurrencyList(it.currencies)
                 is HomeViewState.Failure -> println("failure")
             }
         }
     }
 
-    private fun showNames(currencies: List<Currency>) {
-//        for (currency in currencies) {
-//            println(currency.id)
-//        }
-
-        with(binding){
+    private fun showCurrencyList(currencies: List<Currency>) {
+        with(binding) {
             rcvCurrency.layoutManager = LinearLayoutManager(this.cstContent.context)
             rcvCurrency.setHasFixedSize(true)
             rcvCurrency.adapter =
                 CurrenciesAdapter(currencies) { item: Currency, _: Int ->
-
+                    configureCurrencyBottomSheet()
                 }
         }
-
-
-
     }
 
     private fun requestHomeData() {
         viewModel.discoverCurrencies()
+    }
+
+    private fun configureCurrencyBottomSheet() {
+        hideBottomSheet()
+
+        val dialog = createCurrencyBottomSheet()
+        dialog.show()
+
+        currencyDiaolg = dialog
+    }
+
+    private fun createCurrencyBottomSheet(): BottomSheetDialog {
+
+        return CurrencyDetailsBottomSheet.createDialog(
+            this,
+            dismissAction = ::hideBottomSheet,
+            fullExpand = false
+        )
+    }
+
+    private fun hideBottomSheet() {
+        val isDialogVisible = currencyDiaolg?.isShowing ?: false
+        if (isDialogVisible) {
+            currencyDiaolg?.dismiss()
+        }
     }
 }

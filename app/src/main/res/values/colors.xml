@@ -4,4 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="primary_brand_color">#FA6200</color>
     <color name="secondary_brand_color">#80F416</color>
+    <color name="dark_gray">#232323</color>
 </resources>

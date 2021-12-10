@@ -3,11 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/ADM/Documents/GitHub/rafaellsdev/cryptocurrency-prices/app/src/main/res/drawable/bottom_sheet_rounded_background.xml" value="0.37222222222222223" />
         <entry key="..\:/Users/ADM/Documents/GitHub/rafaellsdev/cryptocurrency-prices/app/src/main/res/drawable/ic_back_arrow.xml" value="0.2359375" />
+        <entry key="..\:/Users/ADM/Documents/GitHub/rafaellsdev/cryptocurrency-prices/app/src/main/res/drawable/ic_close.xml" value="0.37222222222222223" />
         <entry key="..\:/Users/ADM/Documents/GitHub/rafaellsdev/cryptocurrency-prices/app/src/main/res/drawable/toolbar_shadow.xml" value="0.2359375" />
         <entry key="..\:/Users/ADM/Documents/GitHub/rafaellsdev/cryptocurrency-prices/app/src/main/res/layout/crypto_currency_item.xml" value="0.5" />
-        <entry key="..\:/Users/ADM/Documents/GitHub/rafaellsdev/cryptocurrency-prices/app/src/main/res/layout/currency_header.xml" value="0.5" />
-        <entry key="..\:/Users/ADM/Documents/GitHub/rafaellsdev/cryptocurrency-prices/app/src/main/res/layout/home_activity.xml" value="0.21979166666666666" />
+        <entry key="..\:/Users/ADM/Documents/GitHub/rafaellsdev/cryptocurrency-prices/app/src/main/res/layout/currency_details_bottom_sheet.xml" value="0.33" />
+        <entry key="..\:/Users/ADM/Documents/GitHub/rafaellsdev/cryptocurrency-prices/app/src/main/res/layout/currency_header.xml" value="0.33" />
+        <entry key="..\:/Users/ADM/Documents/GitHub/rafaellsdev/cryptocurrency-prices/app/src/main/res/layout/home_activity.xml" value="0.33" />
         <entry key="..\:/Users/ADM/Documents/GitHub/rafaellsdev/cryptocurrency-prices/app/src/main/res/layout/home_main.xml" value="0.26268115942028986" />
       </map>
     </option>
