@@ -10,7 +10,7 @@ import java.text.NumberFormat
 
 class CurrenciesAdapter(
     private val currenciesList: List<Currency>,
-    val clickListener: (Currency, Int) -> Unit
+    val clickListener: (Currency) -> Unit
 ) :
     RecyclerView.Adapter<CurrenciesAdapter.ViewHolder>() {
 
@@ -24,7 +24,7 @@ class CurrenciesAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = currenciesList[position]
         holder.bind(currentItem)
-        holder.itemView.setOnClickListener { clickListener(currentItem, position) }
+        holder.itemView.setOnClickListener { clickListener(currentItem) }
     }
 
     override fun getItemCount(): Int = currenciesList.size

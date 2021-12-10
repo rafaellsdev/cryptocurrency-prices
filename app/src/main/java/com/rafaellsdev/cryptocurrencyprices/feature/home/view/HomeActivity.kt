@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
     private val binding by lazy { HomeActivityBinding.inflate(layoutInflater) }
     private val viewModel: HomeViewModel by viewModels()
-    private var currencyDiaolg: BottomSheetDialog? = null
+    private var currencyDialog: BottomSheetDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +49,7 @@ class HomeActivity : AppCompatActivity() {
             rcvCurrency.layoutManager = LinearLayoutManager(this.cstContent.context)
             rcvCurrency.setHasFixedSize(true)
             rcvCurrency.adapter =
-                CurrenciesAdapter(currencies) { item: Currency, _: Int ->
+                CurrenciesAdapter(currencies) { item: Currency ->
                     configureCurrencyBottomSheet(item)
                 }
         }
@@ -65,7 +65,7 @@ class HomeActivity : AppCompatActivity() {
         val dialog = createCurrencyBottomSheet(currency)
         dialog.show()
 
-        currencyDiaolg = dialog
+        currencyDialog = dialog
     }
 
     private fun createCurrencyBottomSheet(currency: Currency): BottomSheetDialog {
@@ -79,9 +79,9 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun hideBottomSheet() {
-        val isDialogVisible = currencyDiaolg?.isShowing ?: false
+        val isDialogVisible = currencyDialog?.isShowing ?: false
         if (isDialogVisible) {
-            currencyDiaolg?.dismiss()
+            currencyDialog?.dismiss()
         }
     }
 }

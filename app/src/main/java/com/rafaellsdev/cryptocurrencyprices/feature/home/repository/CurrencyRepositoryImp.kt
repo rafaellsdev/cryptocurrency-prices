@@ -12,6 +12,7 @@ class CurrencyRepositoryImp @Inject constructor(
 ) : CurrencyRepository {
     override suspend fun discoverCurrencies(): List<Currency> =
         withContext(Dispatchers.IO) {
-            discoverService.discoverCurrencies().toCurrencyList()
+            discoverService.discoverCurrencies()
+                .toCurrencyList()
         }
 }
