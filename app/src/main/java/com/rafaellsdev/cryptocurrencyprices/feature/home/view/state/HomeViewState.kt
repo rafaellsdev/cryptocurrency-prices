@@ -1,4 +1,4 @@
-package com.rafaellsdev.cryptocurrencyprices.feature.home.viewmodel.state
+package com.rafaellsdev.cryptocurrencyprices.feature.home.view.state
 
 import com.rafaellsdev.cryptocurrencyprices.commons.model.Currency
 

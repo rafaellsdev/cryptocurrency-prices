@@ -1,4 +1,4 @@
-package com.rafaellsdev.cryptocurrencyprices.feature.home.view
+package com.rafaellsdev.cryptocurrencyprices.feature.home.view.activities
 
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -8,9 +8,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.rafaellsdev.cryptocurrencyprices.commons.ext.observe
 import com.rafaellsdev.cryptocurrencyprices.commons.model.Currency
 import com.rafaellsdev.cryptocurrencyprices.databinding.HomeActivityBinding
+import com.rafaellsdev.cryptocurrencyprices.feature.home.view.adapters.CurrenciesAdapter
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.components.CurrencyDetailsBottomSheet
 import com.rafaellsdev.cryptocurrencyprices.feature.home.viewmodel.HomeViewModel
-import com.rafaellsdev.cryptocurrencyprices.feature.home.viewmodel.state.HomeViewState
+import com.rafaellsdev.cryptocurrencyprices.feature.home.view.state.HomeViewState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

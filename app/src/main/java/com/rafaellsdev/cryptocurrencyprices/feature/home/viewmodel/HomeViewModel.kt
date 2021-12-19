@@ -8,8 +8,7 @@ import com.rafaellsdev.cryptocurrencyprices.commons.ext.emit
 import com.rafaellsdev.cryptocurrencyprices.commons.ext.safeLaunch
 import com.rafaellsdev.cryptocurrencyprices.commons.model.DefaultError
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CurrencyRepository
-import com.rafaellsdev.cryptocurrencyprices.feature.home.viewmodel.state.HomeViewState
-
+import com.rafaellsdev.cryptocurrencyprices.feature.home.view.state.HomeViewState
 
 class HomeViewModel @ViewModelInject constructor(
     private val currencyRepository: CurrencyRepository
@@ -22,7 +21,7 @@ class HomeViewModel @ViewModelInject constructor(
         mutableLiveDataState.emit(HomeViewState.Loading)
 
         val currencies = currencyRepository.discoverCurrencies()
-        mutableLiveDataState.value = HomeViewState.Success(currencies)
+        mutableLiveDataState.emit(HomeViewState.Success(currencies))
     }
 
     private fun handleError(error: DefaultError) {

@@ -1,4 +1,4 @@
-package com.rafaellsdev.cryptocurrencyprices.feature.home.view
+package com.rafaellsdev.cryptocurrencyprices.feature.home.view.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
