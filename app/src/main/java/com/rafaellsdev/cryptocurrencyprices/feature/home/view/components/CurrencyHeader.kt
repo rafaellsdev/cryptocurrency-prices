@@ -38,7 +38,7 @@ class CurrencyHeader @JvmOverloads constructor(
     private fun handleAttr(context: Context?, attrs: AttributeSet?) {
         if (attrs != null && context != null) {
             val array = context.obtainStyledAttributes(attrs, R.styleable.CurrencyHeader)
-            title = array.getString(R.styleable.CurrencyHeader_title) ?: ""
+            title = array.getString(R.styleable.CurrencyHeader_currency_header_title) ?: ""
 
             array.recycle()
         }

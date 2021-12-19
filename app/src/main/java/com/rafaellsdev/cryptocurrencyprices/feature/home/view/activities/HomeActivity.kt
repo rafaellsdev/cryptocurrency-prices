@@ -1,6 +1,8 @@
 package com.rafaellsdev.cryptocurrencyprices.feature.home.view.activities
 
 import android.os.Bundle
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,12 +12,13 @@ import com.rafaellsdev.cryptocurrencyprices.commons.model.Currency
 import com.rafaellsdev.cryptocurrencyprices.databinding.HomeActivityBinding
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.adapters.CurrenciesAdapter
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.components.CurrencyDetailsBottomSheet
-import com.rafaellsdev.cryptocurrencyprices.feature.home.viewmodel.HomeViewModel
+import com.rafaellsdev.cryptocurrencyprices.feature.home.view.components.ErrorView
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.state.HomeViewState
+import com.rafaellsdev.cryptocurrencyprices.feature.home.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
     private val binding by lazy { HomeActivityBinding.inflate(layoutInflater) }
     private val viewModel: HomeViewModel by viewModels()
     private var currencyDialog: BottomSheetDialog? = null
@@ -38,14 +41,15 @@ class HomeActivity : AppCompatActivity() {
     private fun observeHomeState() {
         observe(viewModel.homeViewState) {
             when (it) {
-                is HomeViewState.Loading -> println("loading")
+                is HomeViewState.Loading -> showLoadingState()
                 is HomeViewState.Success -> showCurrencyList(it.currencies)
-                is HomeViewState.Failure -> println("failure")
+                is HomeViewState.Failure -> showErrorState()
             }
         }
     }
 
     private fun showCurrencyList(currencies: List<Currency>) {
+        showSuccessState()
         with(binding.rcvCurrency) {
             layoutManager = LinearLayoutManager(binding.cstContent.context)
             setHasFixedSize(true)
@@ -55,6 +59,40 @@ class HomeActivity : AppCompatActivity() {
                 }
         }
     }
+
+    private fun showLoadingState() {
+        hideSuccessState()
+        hideErrorState()
+        binding.shimmerFrameLayout.startLayoutAnimation()
+        binding.shimmerFrameLayout.visibility = VISIBLE
+    }
+
+    private fun hideLoadingState() {
+        binding.shimmerFrameLayout.stopShimmerAnimation()
+        binding.shimmerFrameLayout.visibility = GONE
+    }
+
+    private fun showSuccessState() {
+        hideLoadingState()
+        hideErrorState()
+        binding.cstContent.visibility = VISIBLE
+    }
+
+    private fun hideSuccessState() {
+        binding.cstContent.visibility = GONE
+    }
+
+    private fun showErrorState() {
+        hideLoadingState()
+        hideSuccessState()
+        binding.errorViewContent.visibility = VISIBLE
+    }
+
+    private fun hideErrorState() {
+        binding.errorViewContent.visibility = GONE
+
+    }
+
 
     private fun requestHomeData() {
         viewModel.discoverCurrencies()
@@ -84,5 +122,9 @@ class HomeActivity : AppCompatActivity() {
         if (isDialogVisible) {
             currencyDialog?.dismiss()
         }
+    }
+
+    override fun tryAgainAction() {
+        requestHomeData()
     }
 }
