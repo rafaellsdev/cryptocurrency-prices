@@ -20,6 +20,7 @@
             android:layout_width="24dp"
             android:layout_height="16dp"
             android:layout_marginStart="16dp"
+            android:contentDescription="@string/content_description_back_button"
             android:src="@drawable/ic_back_arrow"
             app:layout_constraintBottom_toBottomOf="@+id/header_title"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,14 +32,13 @@
             android:layout_height="wrap_content"
             android:focusable="true"
             android:fontFamily="@font/"
-            android:textStyle="bold"
             android:textColor="@color/primary_brand_color"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Cryptocurrencies Prices" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

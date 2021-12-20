@@ -62,7 +62,6 @@ class ErrorView @JvmOverloads constructor(
             button = it
         }
 
-
         attributes.recycle()
         updateViewMessages(
             title = title,
@@ -79,7 +78,7 @@ class ErrorView @JvmOverloads constructor(
         errorListener?.tryAgainAction()
     }
 
-     fun setMessage(message: String){
+    fun setMessage(message: String) {
         binding.txtMessageError.text = message
     }
 }

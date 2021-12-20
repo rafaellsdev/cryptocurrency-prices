@@ -15,10 +15,10 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:currency_header_title="Cryptocurrencies Prices"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:currency_header_title="Cryptocurrencies Prices" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -26,7 +26,8 @@
             android:layout_height="100dp"
             android:src="@drawable/sport_logo"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            tools:ignore="ContentDescription" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cst_"
@@ -42,7 +43,7 @@
                 android:id="@+id/txt_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Now you can bet using the following "
+                android:text="@string/now_you_can_bet_using_the_following"
                 android:textColor="@color/dark_gray"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -52,7 +53,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="cryptocurrencies: "
+                android:text="@string/cryptocurrencies"
                 android:textColor="@color/primary_brand_color"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -98,10 +99,10 @@
         android:id="@+id/error_view_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         app:error_view_button_text="Try again"
         app:error_view_message="We have an error."
         app:error_view_title="Whoops!"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
