@@ -6,5 +6,5 @@ sealed class HomeViewState {
 
     object Loading : HomeViewState()
     data class Success(val currencies: List<Currency>) : HomeViewState()
-    object Failure : HomeViewState()
+    data class Failure (val errorMessage: String): HomeViewState()
 }

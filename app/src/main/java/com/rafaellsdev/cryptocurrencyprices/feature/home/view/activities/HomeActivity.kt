@@ -44,7 +44,7 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
             when (it) {
                 is HomeViewState.Loading -> showLoadingState()
                 is HomeViewState.Success -> showCurrencyList(it.currencies)
-                is HomeViewState.Failure -> showErrorState()
+                is HomeViewState.Failure -> showErrorState(it.errorMessage)
             }
         }
     }
@@ -83,10 +83,11 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
         binding.cstContent.visibility = GONE
     }
 
-    private fun showErrorState() {
+    private fun showErrorState(errorMessage: String) {
         hideLoadingState()
         hideSuccessState()
         binding.errorViewContent.visibility = VISIBLE
+        binding.errorViewContent.setMessage(errorMessage)
     }
 
     private fun hideErrorState() {

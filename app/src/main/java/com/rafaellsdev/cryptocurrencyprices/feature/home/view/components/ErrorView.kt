@@ -35,10 +35,6 @@ class ErrorView @JvmOverloads constructor(
         errorListener = listener
     }
 
-    data class ActionButton(
-        val buttonClick: () -> Unit,
-    )
-
     private fun updateViewMessages(
         title: String,
         message: String,
@@ -81,5 +77,9 @@ class ErrorView @JvmOverloads constructor(
 
     private fun tryAgain() {
         errorListener?.tryAgainAction()
+    }
+
+     fun setMessage(message: String){
+        binding.txtMessageError.text = message
     }
 }

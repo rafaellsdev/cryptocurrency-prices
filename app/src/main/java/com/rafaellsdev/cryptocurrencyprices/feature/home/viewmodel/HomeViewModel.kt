@@ -25,6 +25,6 @@ class HomeViewModel @ViewModelInject constructor(
     }
 
     private fun handleError(error: DefaultError) {
-        mutableLiveDataState.emit(HomeViewState.Failure)
+        mutableLiveDataState.emit(HomeViewState.Failure(error.errorMessage))
     }
 }
