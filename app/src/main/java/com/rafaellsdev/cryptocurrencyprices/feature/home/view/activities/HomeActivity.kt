@@ -33,6 +33,7 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
     }
 
     private fun setListeners() {
+        binding.errorViewContent.setup(this)
         binding.toolbar.setOnClickListener {
             onBackPressed()
         }
