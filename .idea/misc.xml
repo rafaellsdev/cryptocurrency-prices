@@ -1,21 +1,26 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/ADM/Documents/GitHub/rafaellsdev/cryptocurrency-prices/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/ADM/Documents/GitHub/rafaellsdev/cryptocurrency-prices/app/src/main/res/drawable/bottom_sheet_rounded_background.xml" value="0.37222222222222223" />
         <entry key="..\:/Users/ADM/Documents/GitHub/rafaellsdev/cryptocurrency-prices/app/src/main/res/drawable/ic_back_arrow.xml" value="0.2359375" />
         <entry key="..\:/Users/ADM/Documents/GitHub/rafaellsdev/cryptocurrency-prices/app/src/main/res/drawable/ic_close.xml" value="0.37222222222222223" />
+        <entry key="..\:/Users/ADM/Documents/GitHub/rafaellsdev/cryptocurrency-prices/app/src/main/res/drawable/ic_launcher_background.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/ADM/Documents/GitHub/rafaellsdev/cryptocurrency-prices/app/src/main/res/drawable/rounded_button_background.xml" value="0.3828125" />
         <entry key="..\:/Users/ADM/Documents/GitHub/rafaellsdev/cryptocurrency-prices/app/src/main/res/drawable/toolbar_shadow.xml" value="0.2359375" />
         <entry key="..\:/Users/ADM/Documents/GitHub/rafaellsdev/cryptocurrency-prices/app/src/main/res/layout/crypto_currency_item.xml" value="0.5" />
         <entry key="..\:/Users/ADM/Documents/GitHub/rafaellsdev/cryptocurrency-prices/app/src/main/res/layout/currency_details_bottom_sheet.xml" value="0.33" />
         <entry key="..\:/Users/ADM/Documents/GitHub/rafaellsdev/cryptocurrency-prices/app/src/main/res/layout/currency_header.xml" value="0.33" />
+        <entry key="..\:/Users/ADM/Documents/GitHub/rafaellsdev/cryptocurrency-prices/app/src/main/res/layout/error_view.xml" value="0.2767210144927536" />
         <entry key="..\:/Users/ADM/Documents/GitHub/rafaellsdev/cryptocurrency-prices/app/src/main/res/layout/home_activity.xml" value="0.33" />
         <entry key="..\:/Users/ADM/Documents/GitHub/rafaellsdev/cryptocurrency-prices/app/src/main/res/layout/home_main.xml" value="0.26268115942028986" />
+        <entry key="..\:/Users/ADM/Documents/GitHub/rafaellsdev/cryptocurrency-prices/app/src/main/res/layout/shimmer_placeholder_currency_item.xml" value="0.2767210144927536" />
+        <entry key="..\:/Users/ADM/Documents/GitHub/rafaellsdev/cryptocurrency-prices/app/src/main/res/layout/shimmer_placeholder_layout.xml" value="0.2767210144927536" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

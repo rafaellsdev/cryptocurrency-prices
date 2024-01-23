@@ -1,25 +1,26 @@
 package com.rafaellsdev.cryptocurrencyprices.di
 
+import com.rafaellsdev.cryptocurrencyprices.commons.const.URLs.BASE_URL
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CurrencyRepository
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CurrencyRepositoryImp
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.service.DiscoverService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object DataModule {
 
     @Singleton
     @Provides
     fun provideRetrofit(): Retrofit =
         Retrofit.Builder()
-            .baseUrl("https://api.coingecko.com/api/v3/")
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

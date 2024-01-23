@@ -1,6 +1,5 @@
 package com.rafaellsdev.cryptocurrencyprices.feature.home.viewmodel
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,10 +7,12 @@ import com.rafaellsdev.cryptocurrencyprices.commons.ext.emit
 import com.rafaellsdev.cryptocurrencyprices.commons.ext.safeLaunch
 import com.rafaellsdev.cryptocurrencyprices.commons.model.DefaultError
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CurrencyRepository
-import com.rafaellsdev.cryptocurrencyprices.feature.home.viewmodel.state.HomeViewState
+import com.rafaellsdev.cryptocurrencyprices.feature.home.view.state.HomeViewState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-
-class HomeViewModel @ViewModelInject constructor(
+@HiltViewModel
+class HomeViewModel @Inject constructor(
     private val currencyRepository: CurrencyRepository
 ) : ViewModel() {
 
@@ -22,10 +23,10 @@ class HomeViewModel @ViewModelInject constructor(
         mutableLiveDataState.emit(HomeViewState.Loading)
 
         val currencies = currencyRepository.discoverCurrencies()
-        mutableLiveDataState.value = HomeViewState.Success(currencies)
+        mutableLiveDataState.emit(HomeViewState.Success(currencies))
     }
 
     private fun handleError(error: DefaultError) {
-        mutableLiveDataState.emit(HomeViewState.Failure)
+        mutableLiveDataState.emit(HomeViewState.Failure(error.errorMessage))
     }
 }

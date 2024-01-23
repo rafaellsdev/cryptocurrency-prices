@@ -5,4 +5,6 @@
     <color name="primary_brand_color">#FA6200</color>
     <color name="secondary_brand_color">#80F416</color>
     <color name="dark_gray">#232323</color>
+    <color name="gray">#dddddd</color>
+    <color name="medium_gray">#798288</color>
 </resources>

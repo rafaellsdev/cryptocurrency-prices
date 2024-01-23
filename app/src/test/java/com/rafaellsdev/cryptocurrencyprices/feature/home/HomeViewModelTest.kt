@@ -6,7 +6,7 @@ import com.nhaarman.mockitokotlin2.verify
 import com.rafaellsdev.cryptocurrencyprices.factory.currencyList
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CurrencyRepository
 import com.rafaellsdev.cryptocurrencyprices.feature.home.viewmodel.HomeViewModel
-import com.rafaellsdev.cryptocurrencyprices.feature.home.viewmodel.state.HomeViewState
+import com.rafaellsdev.cryptocurrencyprices.feature.home.view.state.HomeViewState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher

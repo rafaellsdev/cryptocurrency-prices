@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CryptocurrencyPrices">
         <activity
-            android:name="com.rafaellsdev.cryptocurrencyprices.feature.home.view.HomeActivity"
+            android:name="com.rafaellsdev.cryptocurrencyprices.feature.home.view.activities.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
