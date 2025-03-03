@@ -35,7 +35,7 @@ class ErrorView @JvmOverloads constructor(
         errorListener = listener
     }
 
-    private fun updateViewMessages(
+    fun updateViewMessages(
         title: String,
         message: String,
         buttonMessage: String
@@ -74,7 +74,7 @@ class ErrorView @JvmOverloads constructor(
         }
     }
 
-    private fun tryAgain() {
+    fun tryAgain() {
         errorListener?.tryAgainAction()
     }
 

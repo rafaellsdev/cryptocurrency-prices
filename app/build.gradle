@@ -66,18 +66,31 @@ task jacocoTestReport(type: JacocoReport) {
     reports {
         xml.required = true
         html.required = true
+        csv.required = false
     }
 
-    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*']
-    def debugTree = fileTree(dir: "$buildDir/intermediates/javac/debug", excludes: fileFilter)
+    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
+    def debugTree = fileTree(dir: "$buildDir/tmp/kotlin-classes/debug", excludes: fileFilter)
     def mainSrc = "$projectDir/src/main/java"
+    def kotlinSrc = "$projectDir/src/main/kotlin"
 
-    sourceDirectories.setFrom(files([mainSrc]))
+    sourceDirectories.setFrom(files([mainSrc, kotlinSrc]))
     classDirectories.setFrom(files([debugTree]))
     executionData.setFrom(fileTree(dir: "$buildDir", includes: [
             "jacoco/testDebugUnitTest.exec",
             "outputs/code-coverage/connected/*coverage.ec"
     ]))
+
+    // Ensure the report includes all relevant source sets
+    additionalSourceDirs.setFrom(files([mainSrc, kotlinSrc]))
+    additionalClassDirs.setFrom(files([debugTree]))
+
+    // Ensure the report includes coverage for all relevant tasks
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, excludes: fileFilter)
+        }))
+    }
 }
 
 dependencies {
@@ -90,6 +103,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'androidx.activity:activity-ktx:1.1.0'
+    implementation 'androidx.test.ext:junit-ktx:1.2.1'
     def lifecycle_version = "2.4.0"
 
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
@@ -104,12 +118,16 @@ dependencies {
     implementation 'com.facebook.shimmer:shimmer:0.1.0'
 
     implementation "androidx.navigation:navigation-compose:2.5.3"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.8.0"
+
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.robolectric:robolectric:4.7.3'
     testImplementation 'androidx.test:core:1.4.0'
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.1"
     testImplementation "androidx.arch.core:core-testing:2.1.0"
+    testImplementation "org.mockito:mockito-core:4.0.0"
+    testImplementation "org.mockito:mockito-inline:4.0.0"
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
