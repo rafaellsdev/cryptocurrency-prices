@@ -7,6 +7,7 @@ import com.rafaellsdev.cryptocurrencyprices.commons.model.Currency
 import com.rafaellsdev.cryptocurrencyprices.databinding.CryptoCurrencyItemBinding
 import com.squareup.picasso.Picasso
 import java.text.NumberFormat
+import java.util.Locale
 
 class CurrenciesAdapter(
     private val currenciesList: List<Currency>,
@@ -35,7 +36,7 @@ class CurrenciesAdapter(
             itemBinding.txtCurrencyName.text = currency.name
             itemBinding.txtCurrencyPrice.text = formatPrice(currency.currentPrice)
             itemBinding.txtCurrencyPriceChangePercentage.text =
-                String.format("%.2f", currency.priceChangePercentage) + "%"
+                String.format(Locale.getDefault(), "%.2f%%", currency.priceChangePercentage)
             itemBinding.imgCurrencyIcon
             Picasso.get().load(currency.image).into(itemBinding.imgCurrencyIcon)
         }

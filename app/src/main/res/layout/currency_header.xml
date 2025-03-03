@@ -22,12 +22,12 @@
             android:layout_marginStart="16dp"
             android:contentDescription="@string/content_description_back_button"
             android:src="@drawable/ic_back_arrow"
-            app:layout_constraintBottom_toBottomOf="@+id/header_title"
+            app:layout_constraintBottom_toBottomOf="@+id/headerTitle"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/header_title" />
+            app:layout_constraintTop_toTopOf="@+id/headerTitle" />
 
         <TextView
-            android:id="@+id/header_title"
+            android:id="@+id/headerTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:focusable="true"
