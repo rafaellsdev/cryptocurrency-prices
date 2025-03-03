@@ -1,5 +1,6 @@
 package com.rafaellsdev.cryptocurrencyprices.feature.home.repository
 
+import com.rafaellsdev.cryptocurrencyprices.commons.model.Currency
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.mapper.toCurrencyList
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.model.CurrencyResponse
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.service.DiscoverService

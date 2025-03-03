@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DataModule.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">DiscoverResponseMapperTest Coverage Results</a> &gt; <a href="index.source.html" class="el_package">com.rafaellsdev.cryptocurrencyprices.di</a> &gt; <span class="el_source">DataModule.kt</span></div><h1>DataModule.kt</h1><pre class="source lang-java linenums">package com.rafaellsdev.cryptocurrencyprices.di
+
+import com.rafaellsdev.cryptocurrencyprices.commons.const.URLs.BASE_URL
+import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CurrencyRepository
+import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CurrencyRepositoryImp
+import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.service.DiscoverService
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+object DataModule {
+
+    @Singleton
+    @Provides
+    fun provideRetrofit(): Retrofit =
+<span class="nc" id="L22">        Retrofit.Builder()</span>
+<span class="nc" id="L23">            .baseUrl(BASE_URL)</span>
+<span class="nc" id="L24">            .addConverterFactory(GsonConverterFactory.create())</span>
+<span class="nc" id="L25">            .build()</span>
+
+    @Singleton
+    @Provides
+    fun provideDiscoverService(retrofit: Retrofit): DiscoverService =
+<span class="nc" id="L30">        retrofit.create(DiscoverService::class.java)</span>
+
+    @Singleton
+    @Provides
+    fun provideDiscoverRepository(discoverService: DiscoverService): CurrencyRepository =
+<span class="nc" id="L35">        CurrencyRepositoryImp(discoverService)</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

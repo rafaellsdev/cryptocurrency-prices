@@ -1,0 +1,156 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > CoroutineScopeExtKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.rafaellsdev.cryptocurrencyprices.commons.ext</a>
+</div>
+
+<h1>Coverage Summary for Class: CoroutineScopeExtKt (com.rafaellsdev.cryptocurrencyprices.commons.ext)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CoroutineScopeExtKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">CoroutineScopeExtKt$safeLaunch$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.rafaellsdev.cryptocurrencyprices.commons.ext
+&nbsp;
+&nbsp;import androidx.lifecycle.ViewModel
+&nbsp;import androidx.lifecycle.viewModelScope
+&nbsp;import com.rafaellsdev.cryptocurrencyprices.commons.model.DefaultError
+&nbsp;import kotlinx.coroutines.CoroutineScope
+&nbsp;import kotlinx.coroutines.launch
+&nbsp;import java.lang.Exception
+&nbsp;
+&nbsp;fun ViewModel.safeLaunch(
+&nbsp;    errorBlock: (error: DefaultError) -&gt; Unit,
+&nbsp;    block: suspend CoroutineScope.() -&gt; Unit
+<b class="nc">&nbsp;) = viewModelScope.safeLaunch(block, errorBlock)</b>
+&nbsp;
+&nbsp;fun CoroutineScope.safeLaunch(
+&nbsp;    block: suspend CoroutineScope.() -&gt; Unit,
+&nbsp;    errorBlock: (error: DefaultError) -&gt; Unit
+&nbsp;) {
+<b class="nc">&nbsp;    launch {</b>
+<b class="nc">&nbsp;        try {</b>
+<b class="nc">&nbsp;            block.invoke(this)</b>
+<b class="nc">&nbsp;        } catch (e: Exception) {</b>
+<b class="nc">&nbsp;            errorBlock.invoke(e.toDefaultError())</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-03-03 19:20</div>
+</div>
+</body>
+</html>

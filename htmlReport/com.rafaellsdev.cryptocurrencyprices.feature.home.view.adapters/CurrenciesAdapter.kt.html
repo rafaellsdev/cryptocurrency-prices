@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CurrenciesAdapter.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">DiscoverResponseMapperTest Coverage Results</a> &gt; <a href="index.source.html" class="el_package">com.rafaellsdev.cryptocurrencyprices.feature.home.view.adapters</a> &gt; <span class="el_source">CurrenciesAdapter.kt</span></div><h1>CurrenciesAdapter.kt</h1><pre class="source lang-java linenums">package com.rafaellsdev.cryptocurrencyprices.feature.home.view.adapters
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.rafaellsdev.cryptocurrencyprices.commons.model.Currency
+import com.rafaellsdev.cryptocurrencyprices.databinding.CryptoCurrencyItemBinding
+import com.squareup.picasso.Picasso
+import java.text.NumberFormat
+import java.util.Locale
+
+<span class="nc" id="L12">class CurrenciesAdapter(</span>
+<span class="nc" id="L13">    private val currenciesList: List&lt;Currency&gt;,</span>
+<span class="nc" id="L14">    val clickListener: (Currency) -&gt; Unit</span>
+) :
+<span class="nc" id="L16">    RecyclerView.Adapter&lt;CurrenciesAdapter.ViewHolder&gt;() {</span>
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+
+<span class="nc" id="L20">        val itemBinding =</span>
+<span class="nc" id="L21">            CryptoCurrencyItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)</span>
+<span class="nc" id="L22">        return ViewHolder(itemBinding)</span>
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+<span class="nc" id="L26">        val currentItem = currenciesList[position]</span>
+<span class="nc" id="L27">        holder.bind(currentItem)</span>
+<span class="nc" id="L28">        holder.itemView.setOnClickListener { clickListener(currentItem) }</span>
+<span class="nc" id="L29">    }</span>
+
+<span class="nc" id="L31">    override fun getItemCount(): Int = currenciesList.size</span>
+
+<span class="nc" id="L33">    inner class ViewHolder(private val itemBinding: CryptoCurrencyItemBinding) :</span>
+<span class="nc" id="L34">        RecyclerView.ViewHolder(itemBinding.root) {</span>
+        fun bind(currency: Currency) {
+<span class="nc" id="L36">            itemBinding.txtCurrencyName.text = currency.name</span>
+<span class="nc" id="L37">            itemBinding.txtCurrencyPrice.text = formatPrice(currency.currentPrice)</span>
+<span class="nc" id="L38">            itemBinding.txtCurrencyPriceChangePercentage.text =</span>
+<span class="nc" id="L39">                String.format(Locale.getDefault(), &quot;%.2f%%&quot;, currency.priceChangePercentage)</span>
+<span class="nc" id="L40">            itemBinding.imgCurrencyIcon</span>
+<span class="nc" id="L41">            Picasso.get().load(currency.image).into(itemBinding.imgCurrencyIcon)</span>
+<span class="nc" id="L42">        }</span>
+    }
+
+    private fun formatPrice(price: Any?): String {
+<span class="nc" id="L46">        val format: NumberFormat = NumberFormat.getCurrencyInstance()</span>
+<span class="nc" id="L47">        format.maximumFractionDigits = 0</span>
+<span class="nc" id="L48">        format.currency = java.util.Currency.getInstance(&quot;EUR&quot;)</span>
+<span class="nc" id="L49">        return format.format(price)</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

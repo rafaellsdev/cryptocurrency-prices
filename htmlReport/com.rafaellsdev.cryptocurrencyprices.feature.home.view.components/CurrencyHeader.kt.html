@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CurrencyHeader.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">DiscoverResponseMapperTest Coverage Results</a> &gt; <a href="index.source.html" class="el_package">com.rafaellsdev.cryptocurrencyprices.feature.home.view.components</a> &gt; <span class="el_source">CurrencyHeader.kt</span></div><h1>CurrencyHeader.kt</h1><pre class="source lang-java linenums">package com.rafaellsdev.cryptocurrencyprices.feature.home.view.components
+
+import android.content.Context
+import android.util.AttributeSet
+import android.view.LayoutInflater
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.viewbinding.ViewBinding
+import com.rafaellsdev.cryptocurrencyprices.R
+import com.rafaellsdev.cryptocurrencyprices.databinding.CurrencyHeaderBinding
+
+<span class="nc" id="L11">class CurrencyHeader @JvmOverloads constructor(</span>
+    context: Context,
+<span class="nc" id="L13">    attrs: AttributeSet? = null,</span>
+<span class="nc" id="L14">    defStyleAttr: Int = 0</span>
+<span class="nc" id="L15">) : ConstraintLayout(context, attrs, defStyleAttr) {</span>
+
+<span class="nc" id="L17">    private val binding: CurrencyHeaderBinding = CurrencyHeaderBinding.inflate(</span>
+<span class="nc" id="L18">        LayoutInflater.from(context),</span>
+<span class="nc" id="L19">        this,</span>
+<span class="nc" id="L20">        true</span>
+    )
+
+<span class="nc" id="L23">    private var title: String = &quot;&quot;</span>
+        set(value) {
+<span class="nc" id="L25">            field = value</span>
+<span class="nc" id="L26">            setHeaderTitle(value)</span>
+<span class="nc" id="L27">        }</span>
+
+<span class="nc" id="L29">    init {</span>
+<span class="nc bnc" id="L30" title="All 2 branches missed.">        attrs?.let {</span>
+<span class="nc" id="L31">            handleAttr(context, it)</span>
+<span class="nc" id="L32">        }</span>
+<span class="nc" id="L33">    }</span>
+
+    private fun setHeaderTitle(text: String) {
+<span class="nc" id="L36">        binding.headerTitle.text = text</span>
+<span class="nc" id="L37">    }</span>
+
+    private fun handleAttr(context: Context, attrs: AttributeSet) {
+<span class="nc" id="L40">        val array = context.obtainStyledAttributes(attrs, R.styleable.CurrencyHeader)</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">        title = array.getString(R.styleable.CurrencyHeader_currency_header_title) ?: &quot;&quot;</span>
+<span class="nc" id="L42">        array.recycle()</span>
+<span class="nc" id="L43">    }</span>
+
+    fun changeTitle(newTitle: String) {
+<span class="nc" id="L46">        title = newTitle</span>
+<span class="nc" id="L47">    }</span>
+
+    fun getBinding(): ViewBinding {
+<span class="nc" id="L50">        return binding</span>
+    }
+<span class="nc" id="L52">}</span>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

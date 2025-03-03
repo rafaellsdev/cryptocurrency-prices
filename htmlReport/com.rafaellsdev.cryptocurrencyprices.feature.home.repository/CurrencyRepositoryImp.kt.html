@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CurrencyRepositoryImp.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">DiscoverResponseMapperTest Coverage Results</a> &gt; <a href="index.source.html" class="el_package">com.rafaellsdev.cryptocurrencyprices.feature.home.repository</a> &gt; <span class="el_source">CurrencyRepositoryImp.kt</span></div><h1>CurrencyRepositoryImp.kt</h1><pre class="source lang-java linenums">package com.rafaellsdev.cryptocurrencyprices.feature.home.repository
+
+import com.rafaellsdev.cryptocurrencyprices.commons.model.Currency
+import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.mapper.toCurrencyList
+import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.service.DiscoverService
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
+
+<span class="nc" id="L10">class CurrencyRepositoryImp @Inject constructor(</span>
+<span class="nc" id="L11">    private val discoverService: DiscoverService</span>
+) : CurrencyRepository {
+    override suspend fun discoverCurrencies(): List&lt;Currency&gt; =
+<span class="nc" id="L14">        withContext(Dispatchers.IO) {</span>
+<span class="nc" id="L15">            discoverService.discoverCurrencies()</span>
+<span class="nc" id="L16">                .toCurrencyList()</span>
+<span class="nc" id="L17">        }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

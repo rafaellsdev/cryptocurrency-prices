@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HomeActivity.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">DiscoverResponseMapperTest Coverage Results</a> &gt; <a href="index.source.html" class="el_package">com.rafaellsdev.cryptocurrencyprices.feature.home.view.activities</a> &gt; <span class="el_source">HomeActivity.kt</span></div><h1>HomeActivity.kt</h1><pre class="source lang-java linenums">package com.rafaellsdev.cryptocurrencyprices.feature.home.view.activities
+
+import android.os.Bundle
+import android.view.View.GONE
+import android.view.View.VISIBLE
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.rafaellsdev.cryptocurrencyprices.commons.ext.observe
+import com.rafaellsdev.cryptocurrencyprices.commons.model.Currency
+import com.rafaellsdev.cryptocurrencyprices.databinding.HomeActivityBinding
+import com.rafaellsdev.cryptocurrencyprices.feature.home.view.adapters.CurrenciesAdapter
+import com.rafaellsdev.cryptocurrencyprices.feature.home.view.components.CurrencyDetailsBottomSheet
+import com.rafaellsdev.cryptocurrencyprices.feature.home.view.components.ErrorView
+import com.rafaellsdev.cryptocurrencyprices.feature.home.view.state.HomeViewState
+import com.rafaellsdev.cryptocurrencyprices.feature.home.viewmodel.HomeViewModel
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
+<span class="nc" id="L21">class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {</span>
+<span class="nc" id="L22">    private val binding by lazy { HomeActivityBinding.inflate(layoutInflater) }</span>
+<span class="nc" id="L23">    private val viewModel: HomeViewModel by viewModels()</span>
+    private var currencyDialog: BottomSheetDialog? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+<span class="nc" id="L27">        super.onCreate(savedInstanceState)</span>
+<span class="nc" id="L28">        setContentView(binding.root)</span>
+
+<span class="nc" id="L30">        setListeners()</span>
+<span class="nc" id="L31">        observeHomeState()</span>
+<span class="nc" id="L32">        requestHomeData()</span>
+<span class="nc" id="L33">    }</span>
+
+    private fun setListeners() {
+<span class="nc" id="L36">        binding.errorViewContent.setup(this)</span>
+<span class="nc" id="L37">        binding.toolbar.setOnClickListener {</span>
+<span class="nc" id="L38">            onBackPressed()</span>
+<span class="nc" id="L39">        }</span>
+<span class="nc" id="L40">    }</span>
+
+    private fun observeHomeState() {
+<span class="nc" id="L43">        observe(viewModel.homeViewState) {</span>
+<span class="nc" id="L44">            when (it) {</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">                is HomeViewState.Loading -&gt; showLoadingState()</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">                is HomeViewState.Success -&gt; showCurrencyList(it.currencies)</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">                is HomeViewState.Failure -&gt; showErrorState(it.errorMessage)</span>
+            }
+<span class="nc" id="L49">        }</span>
+<span class="nc" id="L50">    }</span>
+
+    private fun showCurrencyList(currencies: List&lt;Currency&gt;) {
+<span class="nc" id="L53">        showSuccessState()</span>
+<span class="nc" id="L54">        with(binding.rcvCurrency) {</span>
+<span class="nc" id="L55">            layoutManager = LinearLayoutManager(binding.cstContent.context)</span>
+<span class="nc" id="L56">            setHasFixedSize(true)</span>
+<span class="nc" id="L57">            adapter =</span>
+<span class="nc" id="L58">                CurrenciesAdapter(currencies) { item: Currency -&gt;</span>
+<span class="nc" id="L59">                    configureCurrencyBottomSheet(item)</span>
+<span class="nc" id="L60">                }</span>
+<span class="nc" id="L61">        }</span>
+<span class="nc" id="L62">    }</span>
+
+    private fun showLoadingState() {
+<span class="nc" id="L65">        hideSuccessState()</span>
+<span class="nc" id="L66">        hideErrorState()</span>
+<span class="nc" id="L67">        binding.shimmerFrameLayout.startLayoutAnimation()</span>
+<span class="nc" id="L68">        binding.shimmerFrameLayout.visibility = VISIBLE</span>
+<span class="nc" id="L69">    }</span>
+
+    private fun hideLoadingState() {
+<span class="nc" id="L72">        binding.shimmerFrameLayout.stopShimmerAnimation()</span>
+<span class="nc" id="L73">        binding.shimmerFrameLayout.visibility = GONE</span>
+<span class="nc" id="L74">    }</span>
+
+    private fun showSuccessState() {
+<span class="nc" id="L77">        hideLoadingState()</span>
+<span class="nc" id="L78">        hideErrorState()</span>
+<span class="nc" id="L79">        binding.cstContent.visibility = VISIBLE</span>
+<span class="nc" id="L80">    }</span>
+
+    private fun hideSuccessState() {
+<span class="nc" id="L83">        binding.cstContent.visibility = GONE</span>
+<span class="nc" id="L84">    }</span>
+
+    private fun showErrorState(errorMessage: String) {
+<span class="nc" id="L87">        hideLoadingState()</span>
+<span class="nc" id="L88">        hideSuccessState()</span>
+<span class="nc" id="L89">        binding.errorViewContent.visibility = VISIBLE</span>
+<span class="nc" id="L90">        binding.errorViewContent.setMessage(errorMessage)</span>
+<span class="nc" id="L91">    }</span>
+
+    private fun hideErrorState() {
+<span class="nc" id="L94">        binding.errorViewContent.visibility = GONE</span>
+
+<span class="nc" id="L96">    }</span>
+
+
+    private fun requestHomeData() {
+<span class="nc" id="L100">        viewModel.discoverCurrencies()</span>
+<span class="nc" id="L101">    }</span>
+
+    private fun configureCurrencyBottomSheet(currency: Currency) {
+<span class="nc" id="L104">        hideBottomSheet()</span>
+
+<span class="nc" id="L106">        val dialog = createCurrencyBottomSheet(currency)</span>
+<span class="nc" id="L107">        dialog.show()</span>
+
+<span class="nc" id="L109">        currencyDialog = dialog</span>
+<span class="nc" id="L110">    }</span>
+
+    private fun createCurrencyBottomSheet(currency: Currency): BottomSheetDialog {
+
+<span class="nc" id="L114">        return CurrencyDetailsBottomSheet.createDialog(</span>
+<span class="nc" id="L115">            this,</span>
+<span class="nc" id="L116">            dismissAction = ::hideBottomSheet,</span>
+<span class="nc" id="L117">            fullExpand = false,</span>
+<span class="nc" id="L118">            currency = currency</span>
+        )
+    }
+
+    private fun hideBottomSheet() {
+<span class="nc bnc" id="L123" title="All 2 branches missed.">        val isDialogVisible = currencyDialog?.isShowing ?: false</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">        if (isDialogVisible) {</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">            currencyDialog?.dismiss()</span>
+        }
+<span class="nc" id="L127">    }</span>
+
+    override fun tryAgainAction() {
+<span class="nc" id="L130">        requestHomeData()</span>
+<span class="nc" id="L131">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

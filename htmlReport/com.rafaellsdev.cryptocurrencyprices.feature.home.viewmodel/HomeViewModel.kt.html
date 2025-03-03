@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HomeViewModel.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">DiscoverResponseMapperTest Coverage Results</a> &gt; <a href="index.source.html" class="el_package">com.rafaellsdev.cryptocurrencyprices.feature.home.viewmodel</a> &gt; <span class="el_source">HomeViewModel.kt</span></div><h1>HomeViewModel.kt</h1><pre class="source lang-java linenums">package com.rafaellsdev.cryptocurrencyprices.feature.home.viewmodel
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.rafaellsdev.cryptocurrencyprices.commons.ext.emit
+import com.rafaellsdev.cryptocurrencyprices.commons.ext.safeLaunch
+import com.rafaellsdev.cryptocurrencyprices.commons.model.DefaultError
+import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CurrencyRepository
+import com.rafaellsdev.cryptocurrencyprices.feature.home.view.state.HomeViewState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+
+@HiltViewModel
+<span class="nc" id="L15">class HomeViewModel @Inject constructor(</span>
+<span class="nc" id="L16">    private val currencyRepository: CurrencyRepository</span>
+<span class="nc" id="L17">) : ViewModel() {</span>
+
+<span class="nc" id="L19">    private val mutableLiveDataState = MutableLiveData&lt;HomeViewState&gt;()</span>
+<span class="nc" id="L20">    val homeViewState: LiveData&lt;HomeViewState&gt; = mutableLiveDataState</span>
+
+<span class="nc" id="L22">    fun discoverCurrencies() = safeLaunch(::handleError) {</span>
+<span class="nc" id="L23">        mutableLiveDataState.emit(HomeViewState.Loading)</span>
+
+<span class="nc" id="L25">        val currencies = currencyRepository.discoverCurrencies()</span>
+<span class="nc" id="L26">        mutableLiveDataState.emit(HomeViewState.Success(currencies))</span>
+<span class="nc" id="L27">    }</span>
+
+    private fun handleError(error: DefaultError) {
+<span class="nc" id="L30">        mutableLiveDataState.emit(HomeViewState.Failure(error.errorMessage))</span>
+<span class="nc" id="L31">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

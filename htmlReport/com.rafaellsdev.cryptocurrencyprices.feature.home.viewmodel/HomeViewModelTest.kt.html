@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HomeViewModelTest.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">DiscoverResponseMapperTest Coverage Results</a> &gt; <a href="index.source.html" class="el_package">com.rafaellsdev.cryptocurrencyprices.feature.home.viewmodel</a> &gt; <span class="el_source">HomeViewModelTest.kt</span></div><h1>HomeViewModelTest.kt</h1><pre class="source lang-java linenums">package com.rafaellsdev.cryptocurrencyprices.feature.home.viewmodel
+
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.Observer
+import com.rafaellsdev.cryptocurrencyprices.commons.model.Currency
+import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CurrencyRepository
+import com.rafaellsdev.cryptocurrencyprices.feature.home.view.state.HomeViewState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.`when`
+import org.mockito.junit.MockitoJUnitRunner
+
+<span class="nc" id="L24">@ExperimentalCoroutinesApi</span>
+@RunWith(MockitoJUnitRunner::class)
+<span class="nc" id="L26">class HomeViewModelTest {</span>
+
+    @get:Rule
+<span class="nc" id="L29">    val instantExecutorRule = InstantTaskExecutorRule()</span>
+
+    @Mock
+    private lateinit var currencyRepository: CurrencyRepository
+
+    @Mock
+    private lateinit var observer: Observer&lt;HomeViewState&gt;
+
+    private lateinit var viewModel: HomeViewModel
+<span class="nc" id="L38">    private val testDispatcher = TestCoroutineDispatcher()</span>
+
+    @Before
+    fun setUp() {
+<span class="nc" id="L42">        Dispatchers.setMain(testDispatcher)</span>
+<span class="nc" id="L43">        viewModel = HomeViewModel(currencyRepository)</span>
+<span class="nc" id="L44">        viewModel.homeViewState.observeForever(observer)</span>
+<span class="nc" id="L45">    }</span>
+
+    @After
+    fun tearDown() {
+<span class="nc" id="L49">        Dispatchers.resetMain()</span>
+<span class="nc" id="L50">        testDispatcher.cleanupTestCoroutines()</span>
+<span class="nc" id="L51">    }</span>
+
+    @Test
+<span class="nc" id="L54">    fun `discoverCurrencies should emit Loading and then Success`() = runBlockingTest {</span>
+<span class="nc" id="L55">        val mockCurrencies = listOf(</span>
+<span class="nc" id="L56">            Currency(</span>
+<span class="nc" id="L57">                &quot;1&quot;,</span>
+<span class="nc" id="L58">                &quot;BTC&quot;,</span>
+<span class="nc" id="L59">                &quot;Bitcoin&quot;,</span>
+<span class="nc" id="L60">                &quot;https://example.com/bitcoin.png&quot;,</span>
+<span class="nc" id="L61">                50000.0,</span>
+<span class="nc" id="L62">                5.0,</span>
+<span class="nc" id="L63">                52000.0,</span>
+<span class="nc" id="L64">                48000.0</span>
+            ),
+<span class="nc" id="L66">            Currency(</span>
+<span class="nc" id="L67">                &quot;2&quot;,</span>
+<span class="nc" id="L68">                &quot;ETH&quot;,</span>
+<span class="nc" id="L69">                &quot;Ethereum&quot;,</span>
+<span class="nc" id="L70">                &quot;https://example.com/ethereum.png&quot;,</span>
+<span class="nc" id="L71">                4000.0,</span>
+<span class="nc" id="L72">                3.0,</span>
+<span class="nc" id="L73">                4200.0,</span>
+<span class="nc" id="L74">                3800.0</span>
+            )
+        )
+<span class="nc" id="L77">        `when`(currencyRepository.discoverCurrencies()).thenReturn(mockCurrencies)</span>
+
+<span class="nc" id="L79">        viewModel.discoverCurrencies()</span>
+
+<span class="nc" id="L81">        verify(observer).onChanged(HomeViewState.Loading)</span>
+<span class="nc" id="L82">        verify(observer).onChanged(HomeViewState.Success(mockCurrencies))</span>
+<span class="nc" id="L83">    }</span>
+
+    @Test
+<span class="nc" id="L86">    fun `discoverCurrencies should emit Loading and then Failure on error`() = runBlockingTest {</span>
+<span class="nc" id="L87">        val errorMessage = &quot;An error occurred&quot;</span>
+<span class="nc" id="L88">        `when`(currencyRepository.discoverCurrencies()).thenThrow(RuntimeException(errorMessage))</span>
+
+<span class="nc" id="L90">        viewModel.discoverCurrencies()</span>
+
+<span class="nc" id="L92">        verify(observer).onChanged(HomeViewState.Loading)</span>
+<span class="nc" id="L93">        verify(observer).onChanged(HomeViewState.Failure(errorMessage))</span>
+<span class="nc" id="L94">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

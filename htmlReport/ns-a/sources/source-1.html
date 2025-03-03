@@ -1,0 +1,181 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > CurrenciesAdapter</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.rafaellsdev.cryptocurrencyprices.feature.home.view.adapters</a>
+</div>
+
+<h1>Coverage Summary for Class: CurrenciesAdapter (com.rafaellsdev.cryptocurrencyprices.feature.home.view.adapters)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CurrenciesAdapter</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/14)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">CurrenciesAdapter$ViewHolder</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/22)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.rafaellsdev.cryptocurrencyprices.feature.home.view.adapters
+&nbsp;
+&nbsp;import android.view.LayoutInflater
+&nbsp;import android.view.ViewGroup
+&nbsp;import androidx.recyclerview.widget.RecyclerView
+&nbsp;import com.rafaellsdev.cryptocurrencyprices.commons.model.Currency
+&nbsp;import com.rafaellsdev.cryptocurrencyprices.databinding.CryptoCurrencyItemBinding
+&nbsp;import com.squareup.picasso.Picasso
+&nbsp;import java.text.NumberFormat
+&nbsp;import java.util.Locale
+&nbsp;
+&nbsp;class CurrenciesAdapter(
+<b class="nc">&nbsp;    private val currenciesList: List&lt;Currency&gt;,</b>
+<b class="nc">&nbsp;    val clickListener: (Currency) -&gt; Unit</b>
+&nbsp;) :
+<b class="nc">&nbsp;    RecyclerView.Adapter&lt;CurrenciesAdapter.ViewHolder&gt;() {</b>
+&nbsp;
+&nbsp;    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+&nbsp;
+<b class="nc">&nbsp;        val itemBinding =</b>
+<b class="nc">&nbsp;            CryptoCurrencyItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)</b>
+<b class="nc">&nbsp;        return ViewHolder(itemBinding)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+<b class="nc">&nbsp;        val currentItem = currenciesList[position]</b>
+<b class="nc">&nbsp;        holder.bind(currentItem)</b>
+<b class="nc">&nbsp;        holder.itemView.setOnClickListener { clickListener(currentItem) }</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    override fun getItemCount(): Int = currenciesList.size</b>
+&nbsp;
+<b class="nc">&nbsp;    inner class ViewHolder(private val itemBinding: CryptoCurrencyItemBinding) :</b>
+<b class="nc">&nbsp;        RecyclerView.ViewHolder(itemBinding.root) {</b>
+&nbsp;        fun bind(currency: Currency) {
+<b class="nc">&nbsp;            itemBinding.txtCurrencyName.text = currency.name</b>
+<b class="nc">&nbsp;            itemBinding.txtCurrencyPrice.text = formatPrice(currency.currentPrice)</b>
+<b class="nc">&nbsp;            itemBinding.txtCurrencyPriceChangePercentage.text =</b>
+<b class="nc">&nbsp;                String.format(Locale.getDefault(), &quot;%.2f%%&quot;, currency.priceChangePercentage)</b>
+<b class="nc">&nbsp;            itemBinding.imgCurrencyIcon</b>
+<b class="nc">&nbsp;            Picasso.get().load(currency.image).into(itemBinding.imgCurrencyIcon)</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun formatPrice(price: Any?): String {
+<b class="nc">&nbsp;        val format: NumberFormat = NumberFormat.getCurrencyInstance()</b>
+<b class="nc">&nbsp;        format.maximumFractionDigits = 0</b>
+<b class="nc">&nbsp;        format.currency = java.util.Currency.getInstance(&quot;EUR&quot;)</b>
+<b class="nc">&nbsp;        return format.format(price)</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-03-03 19:20</div>
+</div>
+</body>
+</html>

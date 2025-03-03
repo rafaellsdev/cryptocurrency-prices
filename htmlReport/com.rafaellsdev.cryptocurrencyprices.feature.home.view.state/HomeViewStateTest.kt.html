@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HomeViewStateTest.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">DiscoverResponseMapperTest Coverage Results</a> &gt; <a href="index.source.html" class="el_package">com.rafaellsdev.cryptocurrencyprices.feature.home.view.state</a> &gt; <span class="el_source">HomeViewStateTest.kt</span></div><h1>HomeViewStateTest.kt</h1><pre class="source lang-java linenums">package com.rafaellsdev.cryptocurrencyprices.feature.home.view.state
+
+import com.rafaellsdev.cryptocurrencyprices.commons.model.Currency
+import org.junit.Assert.assertEquals
+import org.junit.Test
+
+<span class="nc" id="L7">class HomeViewStateTest {</span>
+
+    @Test
+    fun testLoadingState() {
+<span class="nc" id="L11">        val state = HomeViewState.Loading</span>
+<span class="nc" id="L12">        assertEquals(HomeViewState.Loading, state)</span>
+<span class="nc" id="L13">    }</span>
+
+    @Test
+    fun testSuccessState() {
+<span class="nc" id="L17">        val currencies = listOf(</span>
+<span class="nc" id="L18">            Currency(</span>
+<span class="nc" id="L19">                id = &quot;1&quot;,</span>
+<span class="nc" id="L20">                symbol = &quot;BTC&quot;,</span>
+<span class="nc" id="L21">                name = &quot;Bitcoin&quot;,</span>
+<span class="nc" id="L22">                image = &quot;https://example.com/bitcoin.png&quot;,</span>
+<span class="nc" id="L23">                currentPrice = 50000.0,</span>
+<span class="nc" id="L24">                priceChangePercentage = 5.0,</span>
+<span class="nc" id="L25">                highPrice = 52000.0,</span>
+<span class="nc" id="L26">                lowPrice = 48000.0</span>
+            )
+        )
+<span class="nc" id="L29">        val state = HomeViewState.Success(currencies)</span>
+<span class="nc" id="L30">        assertEquals(currencies, state.currencies)</span>
+<span class="nc" id="L31">    }</span>
+
+    @Test
+    fun testFailureState() {
+<span class="nc" id="L35">        val errorMessage = &quot;Error loading data&quot;</span>
+<span class="nc" id="L36">        val state = HomeViewState.Failure(errorMessage)</span>
+<span class="nc" id="L37">        assertEquals(errorMessage, state.errorMessage)</span>
+<span class="nc" id="L38">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
