@@ -8,7 +8,7 @@ import retrofit2.http.Query
 interface DiscoverService {
     @GET(CURRENCIES_SERVICE)
     suspend fun discoverCurrencies(
-        @Query("vs_currency") currency: String = "eur",
+        @Query("vs_currency") currency: String,
         @Query("order") order: String = "market_cap_desc",
         @Query("per_page") maxPerPage: Int = 100,
         @Query("page") page: Int = 1,
