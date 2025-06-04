@@ -15,6 +15,7 @@ import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.service.Disc
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.service.TrendingService
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.service.CategoryService
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.service.GlobalMetricsService
+import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.service.SearchService
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.GlobalMetricsRepository
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.GlobalMetricsRepositoryImp
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.NewsRepository
@@ -25,6 +26,8 @@ import com.rafaellsdev.cryptocurrencyprices.commons.currency.CurrencyPreferenceR
 import com.rafaellsdev.cryptocurrencyprices.commons.currency.CurrencyPreferenceRepositoryImp
 import com.rafaellsdev.cryptocurrencyprices.commons.favorites.FavoritesRepository
 import com.rafaellsdev.cryptocurrencyprices.commons.favorites.FavoritesRepositoryImp
+import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.SearchRepository
+import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.SearchRepositoryImp
 import android.content.SharedPreferences
 import com.rafaellsdev.cryptocurrencyprices.BaseApplication
 import androidx.room.Room
@@ -82,6 +85,11 @@ object DataModule {
 
     @Singleton
     @Provides
+    fun provideSearchService(retrofit: Retrofit): SearchService =
+        retrofit.create(SearchService::class.java)
+
+    @Singleton
+    @Provides
     fun provideGlobalMetricsService(retrofit: Retrofit): GlobalMetricsService =
         retrofit.create(GlobalMetricsService::class.java)
 
@@ -119,6 +127,13 @@ object DataModule {
         trendingCoinDao: TrendingCoinDao
     ): TrendingRepository =
         TrendingRepositoryImp(trendingService, trendingCoinDao)
+
+    @Singleton
+    @Provides
+    fun provideSearchRepository(
+        searchService: SearchService
+    ): SearchRepository =
+        SearchRepositoryImp(searchService)
 
     @Singleton
     @Provides

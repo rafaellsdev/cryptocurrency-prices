@@ -13,9 +13,11 @@ import com.rafaellsdev.cryptocurrencyprices.commons.favorites.FavoritesRepositor
 import com.rafaellsdev.cryptocurrencyprices.commons.currency.CurrencyPreferenceRepository
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.state.HomeViewState
 import com.rafaellsdev.cryptocurrencyprices.commons.model.TrendingCoin
+import com.rafaellsdev.cryptocurrencyprices.commons.model.SearchCoin
 import com.rafaellsdev.cryptocurrencyprices.commons.model.CoinCategory
 import com.rafaellsdev.cryptocurrencyprices.commons.model.GlobalMetrics
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.GlobalMetricsRepository
+import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.SearchRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -26,7 +28,8 @@ class HomeViewModel @Inject constructor(
     private val categoryRepository: CategoryRepository,
     private val favoritesRepository: FavoritesRepository,
     private val currencyPreferenceRepository: CurrencyPreferenceRepository,
-    private val globalMetricsRepository: GlobalMetricsRepository
+    private val globalMetricsRepository: GlobalMetricsRepository,
+    private val searchRepository: SearchRepository
 ) : ViewModel() {
 
     private val mutableLiveDataState = MutableLiveData<HomeViewState>()
@@ -40,6 +43,9 @@ class HomeViewModel @Inject constructor(
 
     private val mutableGlobalMetrics = MutableLiveData<GlobalMetrics>()
     val globalMetrics: LiveData<GlobalMetrics> = mutableGlobalMetrics
+
+    private val mutableSearchResults = MutableLiveData<List<SearchCoin>>()
+    val searchResults: LiveData<List<SearchCoin>> = mutableSearchResults
 
     fun toggleFavorite(id: String) {
         favoritesRepository.toggleFavorite(id)
@@ -73,6 +79,11 @@ class HomeViewModel @Inject constructor(
     fun loadCategories() = safeLaunch(::handleError) {
         val categories = categoryRepository.getCategories()
         mutableCategories.emit(categories)
+    }
+
+    fun searchCoins(query: String) = safeLaunch({}) {
+        val results = searchRepository.searchCoins(query)
+        mutableSearchResults.emit(results)
     }
 
     private fun handleError(error: DefaultError) {
