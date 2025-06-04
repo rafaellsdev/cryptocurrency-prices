@@ -4,8 +4,11 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.verify
 import com.rafaellsdev.cryptocurrencyprices.factory.currencyList
+import com.rafaellsdev.cryptocurrencyprices.factory.trendingList
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CurrencyRepository
+import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.TrendingRepository
 import com.rafaellsdev.cryptocurrencyprices.commons.favorites.FavoritesRepository
+import com.rafaellsdev.cryptocurrencyprices.commons.currency.CurrencyPreferenceRepository
 import com.rafaellsdev.cryptocurrencyprices.feature.home.viewmodel.HomeViewModel
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.state.HomeViewState
 import kotlinx.coroutines.Dispatchers
@@ -39,7 +42,13 @@ class HomeViewModelTest {
     lateinit var repository: CurrencyRepository
 
     @Mock
+    lateinit var trendingRepository: TrendingRepository
+
+    @Mock
     lateinit var favoritesRepository: FavoritesRepository
+
+    @Mock
+    lateinit var currencyPreferenceRepository: CurrencyPreferenceRepository
 
     @Mock
     lateinit var observer: Observer<HomeViewState>
@@ -49,7 +58,12 @@ class HomeViewModelTest {
     @Before
     fun setup() {
         Dispatchers.setMain(testDispatcher)
-        viewModel = HomeViewModel(repository, favoritesRepository)
+        viewModel = HomeViewModel(
+            repository,
+            trendingRepository,
+            favoritesRepository,
+            currencyPreferenceRepository
+        )
         viewModel.homeViewState.observeForever(observer)
     }
 
@@ -58,6 +72,7 @@ class HomeViewModelTest {
     fun whenRequestDiscoverSuccessShouldEmitLoadingThenSuccess() = runBlockingTest {
         // Given
         Mockito.`when`(repository.discoverCurrencies()).thenReturn(currencyList())
+        Mockito.`when`(trendingRepository.getTrendingCoins()).thenReturn(trendingList())
 
         // When
         viewModel.discoverCurrencies()
@@ -74,6 +89,7 @@ class HomeViewModelTest {
     fun whenRequestDiscoverFailsShouldEmitLoadingThenFailure() = runBlockingTest {
         // Given
         Mockito.`when`(repository.discoverCurrencies()).thenThrow(RuntimeException())
+        Mockito.`when`(trendingRepository.getTrendingCoins()).thenReturn(trendingList())
 
         // When
         viewModel.discoverCurrencies()
