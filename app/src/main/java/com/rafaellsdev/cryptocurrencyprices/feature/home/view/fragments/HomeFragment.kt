@@ -17,6 +17,7 @@ import com.rafaellsdev.cryptocurrencyprices.commons.model.TrendingCoin
 import com.rafaellsdev.cryptocurrencyprices.databinding.FragmentHomeBinding
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.adapters.CurrenciesAdapter
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.adapters.TrendingAdapter
+import com.rafaellsdev.cryptocurrencyprices.feature.home.view.adapters.GlobalMetricsAdapter
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.components.CurrencyDetailsBottomSheet
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.components.ErrorView
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.model.SortOption
@@ -33,6 +34,7 @@ class HomeFragment : Fragment(), ErrorView.ErrorListener {
     private var currencyDialog: BottomSheetDialog? = null
     private lateinit var currenciesAdapter: CurrenciesAdapter
     private lateinit var trendingAdapter: TrendingAdapter
+    private lateinit var globalAdapter: GlobalMetricsAdapter
     private var allCurrencies: List<Currency> = emptyList()
     private var trendingList: List<TrendingCoin> = emptyList()
     private var currentQuery: String? = null
@@ -56,11 +58,14 @@ class HomeFragment : Fragment(), ErrorView.ErrorListener {
         setupCurrencySpinner()
         setupCategorySpinner()
         setupTrendingRecycler()
+        setupMetricsPager()
         observeTrending()
+        observeGlobalMetrics()
         observeHomeState()
         viewModel.loadCategories()
         requestHomeData()
         viewModel.loadTrendingCoins()
+        viewModel.loadGlobalMetrics()
     }
 
     override fun onDestroyView() {
@@ -189,11 +194,33 @@ class HomeFragment : Fragment(), ErrorView.ErrorListener {
         }
     }
 
+    private fun setupMetricsPager() {
+        globalAdapter = GlobalMetricsAdapter(emptyList())
+        binding.pagerGlobalMetrics.adapter = globalAdapter
+    }
+
     private fun observeTrending() {
         observe(viewModel.trendingCoins) {
             trendingList = it
             trendingAdapter.updateTrending(it)
         }
+    }
+
+    private fun observeGlobalMetrics() {
+        observe(viewModel.globalMetrics) { metrics ->
+            val items = listOf(
+                getString(R.string.total_market_cap) to metrics.totalMarketCap.toLong().toString(),
+                getString(R.string.total_volume) to metrics.totalVolume.toLong().toString(),
+                getString(R.string.market_dominance) to formatDominance(metrics.dominantCoins)
+            )
+            globalAdapter.update(items)
+        }
+    }
+
+    private fun formatDominance(map: Map<String, Double>): String {
+        return map.entries.sortedByDescending { it.value }
+            .take(2)
+            .joinToString(" | ") { "${it.key.uppercase()}: ${"%.2f".format(it.value)}%" }
     }
 
     private fun observeHomeState() {

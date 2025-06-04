@@ -14,6 +14,9 @@ import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CategoryRepo
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.service.DiscoverService
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.service.TrendingService
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.service.CategoryService
+import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.service.GlobalMetricsService
+import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.GlobalMetricsRepository
+import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.GlobalMetricsRepositoryImp
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.NewsRepository
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.NewsRepositoryImp
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.service.NewsService
@@ -79,6 +82,11 @@ object DataModule {
 
     @Singleton
     @Provides
+    fun provideGlobalMetricsService(retrofit: Retrofit): GlobalMetricsService =
+        retrofit.create(GlobalMetricsService::class.java)
+
+    @Singleton
+    @Provides
     fun provideCategoryService(retrofit: Retrofit): CategoryService =
         retrofit.create(CategoryService::class.java)
 
@@ -111,6 +119,14 @@ object DataModule {
         trendingCoinDao: TrendingCoinDao
     ): TrendingRepository =
         TrendingRepositoryImp(trendingService, trendingCoinDao)
+
+    @Singleton
+    @Provides
+    fun provideGlobalMetricsRepository(
+        service: GlobalMetricsService,
+        currencyPreferenceRepository: CurrencyPreferenceRepository
+    ): GlobalMetricsRepository =
+        GlobalMetricsRepositoryImp(service, currencyPreferenceRepository)
 
     @Singleton
     @Provides
