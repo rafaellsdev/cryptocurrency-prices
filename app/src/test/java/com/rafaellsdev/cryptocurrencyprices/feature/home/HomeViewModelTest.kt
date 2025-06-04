@@ -7,6 +7,7 @@ import com.rafaellsdev.cryptocurrencyprices.factory.currencyList
 import com.rafaellsdev.cryptocurrencyprices.factory.trendingList
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CurrencyRepository
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.TrendingRepository
+import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CategoryRepository
 import com.rafaellsdev.cryptocurrencyprices.commons.favorites.FavoritesRepository
 import com.rafaellsdev.cryptocurrencyprices.commons.currency.CurrencyPreferenceRepository
 import com.rafaellsdev.cryptocurrencyprices.feature.home.viewmodel.HomeViewModel
@@ -45,6 +46,9 @@ class HomeViewModelTest {
     lateinit var trendingRepository: TrendingRepository
 
     @Mock
+    lateinit var categoryRepository: CategoryRepository
+
+    @Mock
     lateinit var favoritesRepository: FavoritesRepository
 
     @Mock
@@ -61,6 +65,7 @@ class HomeViewModelTest {
         viewModel = HomeViewModel(
             repository,
             trendingRepository,
+            categoryRepository,
             favoritesRepository,
             currencyPreferenceRepository
         )
@@ -71,7 +76,7 @@ class HomeViewModelTest {
     @Test
     fun whenRequestDiscoverSuccessShouldEmitLoadingThenSuccess() = runBlockingTest {
         // Given
-        Mockito.`when`(repository.discoverCurrencies()).thenReturn(currencyList())
+        Mockito.`when`(repository.discoverCurrencies(Mockito.nullable(String::class.java))).thenReturn(currencyList())
         Mockito.`when`(trendingRepository.getTrendingCoins()).thenReturn(trendingList())
 
         // When
@@ -88,7 +93,7 @@ class HomeViewModelTest {
     @Test
     fun whenRequestDiscoverFailsShouldEmitLoadingThenFailure() = runBlockingTest {
         // Given
-        Mockito.`when`(repository.discoverCurrencies()).thenThrow(RuntimeException())
+        Mockito.`when`(repository.discoverCurrencies(Mockito.nullable(String::class.java))).thenThrow(RuntimeException())
         Mockito.`when`(trendingRepository.getTrendingCoins()).thenReturn(trendingList())
 
         // When

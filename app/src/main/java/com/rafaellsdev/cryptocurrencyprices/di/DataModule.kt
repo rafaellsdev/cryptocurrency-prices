@@ -5,8 +5,11 @@ import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CurrencyRepo
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CurrencyRepositoryImp
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.TrendingRepository
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.TrendingRepositoryImp
+import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CategoryRepository
+import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CategoryRepositoryImp
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.service.DiscoverService
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.service.TrendingService
+import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.service.CategoryService
 import com.rafaellsdev.cryptocurrencyprices.commons.currency.CurrencyPreferenceRepository
 import com.rafaellsdev.cryptocurrencyprices.commons.currency.CurrencyPreferenceRepositoryImp
 import com.rafaellsdev.cryptocurrencyprices.commons.favorites.FavoritesRepository
@@ -44,6 +47,11 @@ object DataModule {
 
     @Singleton
     @Provides
+    fun provideCategoryService(retrofit: Retrofit): CategoryService =
+        retrofit.create(CategoryService::class.java)
+
+    @Singleton
+    @Provides
     fun provideCurrencyPreferenceRepository(preferences: SharedPreferences): CurrencyPreferenceRepository =
         CurrencyPreferenceRepositoryImp(preferences)
 
@@ -54,6 +62,11 @@ object DataModule {
         currencyPreferenceRepository: CurrencyPreferenceRepository
     ): CurrencyRepository =
         CurrencyRepositoryImp(discoverService, currencyPreferenceRepository)
+
+    @Singleton
+    @Provides
+    fun provideCategoryRepository(categoryService: CategoryService): CategoryRepository =
+        CategoryRepositoryImp(categoryService)
 
     @Singleton
     @Provides

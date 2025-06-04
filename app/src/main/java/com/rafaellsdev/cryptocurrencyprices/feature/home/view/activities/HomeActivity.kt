@@ -35,6 +35,7 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
     private var trendingList: List<TrendingCoin> = emptyList()
     private var currentQuery: String? = null
     private var sortOption: SortOption = SortOption.MARKET_CAP
+    private var selectedCategory: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,9 +45,11 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
         setupSearchView()
         setupSortSpinner()
         setupCurrencySpinner()
+        setupCategorySpinner()
         setupTrendingRecycler()
         observeTrending()
         observeHomeState()
+        viewModel.loadCategories()
         requestHomeData()
         viewModel.loadTrendingCoins()
     }
@@ -119,6 +122,28 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
                     viewModel.setFiatCurrency(selected.lowercase())
                     requestHomeData()
                 }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+    }
+
+    private fun setupCategorySpinner() {
+        observe(viewModel.coinCategories) { categories ->
+            val options = mutableListOf(getString(R.string.all_categories))
+            options.addAll(categories.map { it.name })
+            val adapter = ArrayAdapter(
+                this,
+                android.R.layout.simple_spinner_item,
+                options
+            ).also { it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
+            binding.spinnerCategory.adapter = adapter
+        }
+
+        binding.spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                selectedCategory = if (position == 0) null else viewModel.coinCategories.value?.get(position - 1)?.id
+                requestHomeData()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
@@ -217,7 +242,7 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
 
 
     private fun requestHomeData() {
-        viewModel.discoverCurrencies()
+        viewModel.discoverCurrencies(selectedCategory)
     }
 
     private fun configureCurrencyBottomSheet(currency: Currency) {
