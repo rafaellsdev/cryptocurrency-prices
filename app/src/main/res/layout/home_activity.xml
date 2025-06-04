@@ -87,8 +87,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="@string/trending"
-            android:textStyle="bold"
             android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/search_view" />
 
@@ -99,8 +99,8 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:overScrollMode="never"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txt_trending_title"
             tools:listitem="@layout/trending_currency_item" />
 
