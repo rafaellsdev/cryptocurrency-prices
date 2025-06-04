@@ -11,4 +11,8 @@
     <string name="now_you_can_bet_using_the_following">Now you can bet using the following</string>
     <string name="cryptocurrencies">cryptocurrencies:</string>
     <string name="search_hint">Search coins</string>
+    <string name="header_cryptocurrencies_title">Cryptocurrencies Prices</string>
+    <string name="error_title_whoops">Whoops!</string>
+    <string name="error_message_generic">We have an error.</string>
+    <string name="error_button_try_again">Try again</string>
 </resources>
