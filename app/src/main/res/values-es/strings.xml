@@ -31,4 +31,7 @@
     <string name="daily_volume">Volumen diario: </string>
     <string name="circulating_supply">Suministro en circulación: </string>
     <string name="total_supply">Suministro total: </string>
+    <string name="total_market_cap">Capitalización total</string>
+    <string name="total_volume">Volumen total</string>
+    <string name="market_dominance">Dominancia</string>
 </resources>

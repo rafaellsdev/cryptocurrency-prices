@@ -14,6 +14,8 @@ import com.rafaellsdev.cryptocurrencyprices.commons.currency.CurrencyPreferenceR
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.state.HomeViewState
 import com.rafaellsdev.cryptocurrencyprices.commons.model.TrendingCoin
 import com.rafaellsdev.cryptocurrencyprices.commons.model.CoinCategory
+import com.rafaellsdev.cryptocurrencyprices.commons.model.GlobalMetrics
+import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.GlobalMetricsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -23,7 +25,8 @@ class HomeViewModel @Inject constructor(
     private val trendingRepository: TrendingRepository,
     private val categoryRepository: CategoryRepository,
     private val favoritesRepository: FavoritesRepository,
-    private val currencyPreferenceRepository: CurrencyPreferenceRepository
+    private val currencyPreferenceRepository: CurrencyPreferenceRepository,
+    private val globalMetricsRepository: GlobalMetricsRepository
 ) : ViewModel() {
 
     private val mutableLiveDataState = MutableLiveData<HomeViewState>()
@@ -34,6 +37,9 @@ class HomeViewModel @Inject constructor(
 
     private val mutableCategories = MutableLiveData<List<CoinCategory>>()
     val coinCategories: LiveData<List<CoinCategory>> = mutableCategories
+
+    private val mutableGlobalMetrics = MutableLiveData<GlobalMetrics>()
+    val globalMetrics: LiveData<GlobalMetrics> = mutableGlobalMetrics
 
     fun toggleFavorite(id: String) {
         favoritesRepository.toggleFavorite(id)
@@ -57,6 +63,11 @@ class HomeViewModel @Inject constructor(
     fun loadTrendingCoins() = safeLaunch(::handleError) {
         val trending = trendingRepository.getTrendingCoins()
         mutableTrending.emit(trending)
+    }
+
+    fun loadGlobalMetrics() = safeLaunch(::handleError) {
+        val metrics = globalMetricsRepository.getGlobalMetrics()
+        mutableGlobalMetrics.emit(metrics)
     }
 
     fun loadCategories() = safeLaunch(::handleError) {
