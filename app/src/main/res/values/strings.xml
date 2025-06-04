@@ -26,5 +26,7 @@
         <item>USD</item>
     </string-array>
 
+    <string name="all_categories">All</string>
+
     <string name="trending">Trending</string>
 </resources>

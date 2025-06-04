@@ -12,6 +12,7 @@ interface DiscoverService {
         @Query("order") order: String = "market_cap_desc",
         @Query("per_page") maxPerPage: Int = 100,
         @Query("page") page: Int = 1,
-        @Query("sparkline") sparkline: Boolean = false
+        @Query("sparkline") sparkline: Boolean = false,
+        @Query("category") category: String? = null
     ): List<CurrencyResponse>
 }

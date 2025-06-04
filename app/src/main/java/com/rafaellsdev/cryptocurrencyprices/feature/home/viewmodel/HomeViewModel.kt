@@ -8,10 +8,12 @@ import com.rafaellsdev.cryptocurrencyprices.commons.ext.safeLaunch
 import com.rafaellsdev.cryptocurrencyprices.commons.model.DefaultError
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CurrencyRepository
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.TrendingRepository
+import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CategoryRepository
 import com.rafaellsdev.cryptocurrencyprices.commons.favorites.FavoritesRepository
 import com.rafaellsdev.cryptocurrencyprices.commons.currency.CurrencyPreferenceRepository
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.state.HomeViewState
 import com.rafaellsdev.cryptocurrencyprices.commons.model.TrendingCoin
+import com.rafaellsdev.cryptocurrencyprices.commons.model.CoinCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -19,6 +21,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val currencyRepository: CurrencyRepository,
     private val trendingRepository: TrendingRepository,
+    private val categoryRepository: CategoryRepository,
     private val favoritesRepository: FavoritesRepository,
     private val currencyPreferenceRepository: CurrencyPreferenceRepository
 ) : ViewModel() {
@@ -28,6 +31,9 @@ class HomeViewModel @Inject constructor(
 
     private val mutableTrending = MutableLiveData<List<TrendingCoin>>()
     val trendingCoins: LiveData<List<TrendingCoin>> = mutableTrending
+
+    private val mutableCategories = MutableLiveData<List<CoinCategory>>()
+    val coinCategories: LiveData<List<CoinCategory>> = mutableCategories
 
     fun toggleFavorite(id: String) {
         favoritesRepository.toggleFavorite(id)
@@ -41,16 +47,21 @@ class HomeViewModel @Inject constructor(
 
     fun getFiatCurrency(): String = currencyPreferenceRepository.getSelectedCurrency()
 
-    fun discoverCurrencies() = safeLaunch(::handleError) {
+    fun discoverCurrencies(category: String? = null) = safeLaunch(::handleError) {
         mutableLiveDataState.emit(HomeViewState.Loading)
 
-        val currencies = currencyRepository.discoverCurrencies()
+        val currencies = currencyRepository.discoverCurrencies(category)
         mutableLiveDataState.emit(HomeViewState.Success(currencies))
     }
 
     fun loadTrendingCoins() = safeLaunch(::handleError) {
         val trending = trendingRepository.getTrendingCoins()
         mutableTrending.emit(trending)
+    }
+
+    fun loadCategories() = safeLaunch(::handleError) {
+        val categories = categoryRepository.getCategories()
+        mutableCategories.emit(categories)
     }
 
     private fun handleError(error: DefaultError) {
