@@ -12,7 +12,8 @@ class CurrenciesAdapter(
     private var currenciesList: List<Currency>,
     val clickListener: (Currency) -> Unit,
     private val isFavorite: (String) -> Boolean,
-    private val toggleFavorite: (String) -> Unit
+    private val toggleFavorite: (String) -> Unit,
+    private var currencyCode: String
 ) :
     RecyclerView.Adapter<CurrenciesAdapter.ViewHolder>() {
 
@@ -33,6 +34,11 @@ class CurrenciesAdapter(
 
     fun updateCurrencies(currencies: List<Currency>) {
         currenciesList = currencies
+        notifyDataSetChanged()
+    }
+
+    fun setCurrencyCode(code: String) {
+        currencyCode = code
         notifyDataSetChanged()
     }
 
@@ -62,7 +68,7 @@ class CurrenciesAdapter(
     private fun formatPrice(price: Any?): String {
         val format: NumberFormat = NumberFormat.getCurrencyInstance()
         format.maximumFractionDigits = 0
-        format.currency = java.util.Currency.getInstance("EUR")
+        format.currency = java.util.Currency.getInstance(currencyCode)
         return format.format(price)
     }
 }

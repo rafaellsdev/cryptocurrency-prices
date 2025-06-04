@@ -20,4 +20,9 @@
         <item>Precio</item>
         <item>Cambio 24h</item>
     </string-array>
+
+    <string-array name="currency_options">
+        <item>EUR</item>
+        <item>USD</item>
+    </string-array>
 </resources>

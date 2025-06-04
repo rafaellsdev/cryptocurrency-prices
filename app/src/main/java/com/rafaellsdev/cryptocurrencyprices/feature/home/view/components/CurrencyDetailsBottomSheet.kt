@@ -23,11 +23,12 @@ class CurrencyDetailsBottomSheet private constructor() {
             context: Context,
             dismissAction: () -> Unit,
             fullExpand: Boolean = false,
-            currency: Currency? = null
+            currency: Currency? = null,
+            currencyCode: String
         ): BottomSheetDialog {
 
             val contentView = CurrencyDetailsBottomSheetView(context).apply {
-                configure(dismissAction, fullExpand, currency)
+                configure(dismissAction, fullExpand, currency, currencyCode)
             }
 
             val dialog = BottomSheetDialog(context)
@@ -61,21 +62,22 @@ private class CurrencyDetailsBottomSheetView @JvmOverloads constructor(
     fun configure(
         dismissAction: () -> Unit,
         fullExpand: Boolean = false,
-        currency: Currency?
+        currency: Currency?,
+        currencyCode: String
     ) {
         binding.imgClose.onClick(dismissAction)
         binding.bottomSheetCurrencyName.text = currency?.name ?: ""
-        binding.bottomSheetPriceValue.text = formatPrice(currency?.currentPrice)
-        binding.bottomSheetHighestPriceValue.text = formatPrice(currency?.highPrice)
-        binding.bottomSheetLowestPriceValue.text = formatPrice(currency?.lowPrice)
+        binding.bottomSheetPriceValue.text = formatPrice(currency?.currentPrice, currencyCode)
+        binding.bottomSheetHighestPriceValue.text = formatPrice(currency?.highPrice, currencyCode)
+        binding.bottomSheetLowestPriceValue.text = formatPrice(currency?.lowPrice, currencyCode)
 
         setHeight(fullExpand)
     }
 
-    private fun formatPrice(price: Any?): String {
+    private fun formatPrice(price: Any?, currencyCode: String): String {
         val format: NumberFormat = NumberFormat.getCurrencyInstance()
         format.maximumFractionDigits = 0
-        format.currency = getInstance("EUR")
+        format.currency = getInstance(currencyCode)
         return format.format(price)
     }
 

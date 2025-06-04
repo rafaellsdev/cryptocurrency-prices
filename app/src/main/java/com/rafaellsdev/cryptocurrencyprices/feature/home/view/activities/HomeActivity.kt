@@ -39,6 +39,7 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
         setListeners()
         setupSearchView()
         setupSortSpinner()
+        setupCurrencySpinner()
         observeHomeState()
         requestHomeData()
     }
@@ -87,6 +88,36 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
         }
     }
 
+    private fun setupCurrencySpinner() {
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.currency_options,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.spinnerCurrency.adapter = adapter
+        }
+
+        val options = resources.getStringArray(R.array.currency_options)
+        val current = viewModel.getFiatCurrency().uppercase()
+        val index = options.indexOf(current)
+        if (index >= 0) {
+            binding.spinnerCurrency.setSelection(index)
+        }
+
+        binding.spinnerCurrency.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                val selected = parent.getItemAtPosition(position) as String
+                if (selected.lowercase() != viewModel.getFiatCurrency()) {
+                    viewModel.setFiatCurrency(selected.lowercase())
+                    requestHomeData()
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+    }
+
     private fun observeHomeState() {
         observe(viewModel.homeViewState) {
             when (it) {
@@ -110,7 +141,8 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
                 displayed,
                 { item: Currency -> configureCurrencyBottomSheet(item) },
                 { id -> viewModel.isFavorite(id) },
-                { id -> viewModel.toggleFavorite(id) }
+                { id -> viewModel.toggleFavorite(id) },
+                viewModel.getFiatCurrency().uppercase()
             )
             with(binding.rcvCurrency) {
                 layoutManager = LinearLayoutManager(binding.cstContent.context)
@@ -118,6 +150,7 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
                 adapter = currenciesAdapter
             }
         } else {
+            currenciesAdapter.setCurrencyCode(viewModel.getFiatCurrency().uppercase())
             sortAndFilterCurrencies(currentQuery)
         }
     }
@@ -176,7 +209,8 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
             this,
             dismissAction = ::hideBottomSheet,
             fullExpand = false,
-            currency = currency
+            currency = currency,
+            currencyCode = viewModel.getFiatCurrency().uppercase()
         )
     }
 
