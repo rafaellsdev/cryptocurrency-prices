@@ -18,5 +18,5 @@ This Android project began as a small coding test for a company. It has since be
 
 ## Running the app
 
-Open the project in **Android Studio** and let Gradle sync. The codebase is written in Kotlin and uses popular libraries such as Hilt, Retrofit and View Binding.
+Open the project in **Android Studio** and let Gradle sync. The codebase is written in Kotlin and uses popular libraries such as Hilt, Retrofit and View Binding. Material Design 3 components with dynamic color theming are enabled for a modern look.
 
