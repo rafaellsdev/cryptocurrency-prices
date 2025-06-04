@@ -22,12 +22,15 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
     private val binding by lazy { HomeActivityBinding.inflate(layoutInflater) }
     private val viewModel: HomeViewModel by viewModels()
     private var currencyDialog: BottomSheetDialog? = null
+    private lateinit var currenciesAdapter: CurrenciesAdapter
+    private var allCurrencies: List<Currency> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         setListeners()
+        setupSearchView()
         observeHomeState()
         requestHomeData()
     }
@@ -37,6 +40,20 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
         binding.toolbar.setOnClickListener {
             onBackPressed()
         }
+    }
+
+    private fun setupSearchView() {
+        binding.search_view.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                filterCurrencies(query)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filterCurrencies(newText)
+                return true
+            }
+        })
     }
 
     private fun observeHomeState() {
@@ -51,13 +68,18 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
 
     private fun showCurrencyList(currencies: List<Currency>) {
         showSuccessState()
-        with(binding.rcvCurrency) {
-            layoutManager = LinearLayoutManager(binding.cstContent.context)
-            setHasFixedSize(true)
-            adapter =
-                CurrenciesAdapter(currencies) { item: Currency ->
-                    configureCurrencyBottomSheet(item)
-                }
+        allCurrencies = currencies
+        if (!::currenciesAdapter.isInitialized) {
+            currenciesAdapter = CurrenciesAdapter(currencies) { item: Currency ->
+                configureCurrencyBottomSheet(item)
+            }
+            with(binding.rcvCurrency) {
+                layoutManager = LinearLayoutManager(binding.cstContent.context)
+                setHasFixedSize(true)
+                adapter = currenciesAdapter
+            }
+        } else {
+            currenciesAdapter.updateCurrencies(currencies)
         }
     }
 
@@ -124,6 +146,20 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
         if (isDialogVisible) {
             currencyDialog?.dismiss()
         }
+    }
+
+    private fun filterCurrencies(query: String?) {
+        if (!::currenciesAdapter.isInitialized) return
+
+        val filtered = if (query.isNullOrBlank()) {
+            allCurrencies
+        } else {
+            allCurrencies.filter {
+                it.name.contains(query, ignoreCase = true) ||
+                    it.symbol.contains(query, ignoreCase = true)
+            }
+        }
+        currenciesAdapter.updateCurrencies(filtered)
     }
 
     override fun tryAgainAction() {
