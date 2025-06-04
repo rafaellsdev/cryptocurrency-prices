@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.transition.MaterialFadeThrough
 import com.rafaellsdev.cryptocurrencyprices.databinding.ActivityMainBinding
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.fragments.FavoritesFragment
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.fragments.FeedFragment
@@ -20,8 +21,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupBottomNavigation()
         if (savedInstanceState == null) {
+            val fragment = HomeFragment().apply {
+                enterTransition = MaterialFadeThrough()
+                exitTransition = MaterialFadeThrough()
+            }
             supportFragmentManager.beginTransaction()
-                .replace(binding.fragmentContainer.id, HomeFragment())
+                .setReorderingAllowed(true)
+                .replace(binding.fragmentContainer.id, fragment)
                 .commit()
         }
     }
@@ -34,7 +40,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_feed -> FeedFragment()
                 else -> HomeFragment()
             }
+            fragment.enterTransition = MaterialFadeThrough()
+            fragment.exitTransition = MaterialFadeThrough()
             supportFragmentManager.beginTransaction()
+                .setReorderingAllowed(true)
                 .replace(binding.fragmentContainer.id, fragment)
                 .commit()
             true
