@@ -1,171 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cst_content"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bottom_sheet_rounded_background">
 
+    <!-- faint illustration -->
+    <ImageView
+        android:id="@+id/illustration"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha="0.1"
+        android:scaleType="centerCrop"
+        android:src="@drawable/footballer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/img_close"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_margin="16dp"
         android:contentDescription="@string/content_description_close_button"
         android:src="@drawable/ic_close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <ImageView
         android:id="@+id/bottom_sheet_currency_image"
-        android:layout_width="0dp"
+        android:layout_width="96dp"
         android:layout_height="96dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:src="@drawable/sport_logo"
+        android:layout_marginTop="48dp"
+        android:contentDescription="@string/content_description_coin_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_close"
-        tools:ignore="ContentDescription" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="180dp"
-        android:layout_marginTop="120dp"
-        android:contentDescription="@string/content_description_soccer_player_celebrating"
-        android:src="@drawable/footballer"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_close" />
+        tools:src="@drawable/sport_logo" />
 
     <TextView
         android:id="@+id/bottom_sheet_currency_name"
+        style="@style/TextAppearance.Material3.TitleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:textColor="@color/primary_brand_color"
-        android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_currency_image"
-        tools:text="@string/currency_name" />
-
-    <TextView
-        android:id="@+id/bottom_sheet_currency_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/dark_gray"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/bottom_sheet_currency_name"
-        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_currency_name"
-        android:text="@string/currency_price" />
-
-    <TextView
-        android:id="@+id/bottom_sheet_high_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/highest_price"
-        android:textColor="@color/dark_gray"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/bottom_sheet_currency_price"
-        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_currency_price" />
-
-    <TextView
-        android:id="@+id/bottom_sheet_low_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/lowest_price"
-        android:textColor="@color/dark_gray"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/bottom_sheet_high_price"
-        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_high_price" />
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_currency_image"
+        tools:text="Bitcoin" />
 
     <TextView
         android:id="@+id/bottom_sheet_price_value"
+        style="@style/TextAppearance.Material3.DisplaySmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        app:layout_constraintStart_toEndOf="@+id/bottom_sheet_currency_price"
-        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_currency_name"
-        tools:text="Price" />
-
-    <TextView
-        android:id="@+id/bottom_sheet_highest_price_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        app:layout_constraintStart_toEndOf="@+id/bottom_sheet_high_price"
-        app:layout_constraintTop_toTopOf="@+id/bottom_sheet_high_price"
-        tools:text="Highest price" />
-
-    <TextView
-        android:id="@+id/bottom_sheet_lowest_price_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        app:layout_constraintStart_toEndOf="@+id/bottom_sheet_low_price"
-        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_highest_price_value"
-        tools:text="Lowest price" />
-
-    <TextView
-        android:id="@+id/bottom_sheet_volume"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/daily_volume"
-        android:textColor="@color/dark_gray"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/orange_highlight"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/bottom_sheet_low_price"
-        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_low_price" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_currency_name"
+        tools:text="$104,908" />
 
-    <TextView
-        android:id="@+id/bottom_sheet_volume_value"
-        android:layout_width="wrap_content"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/stats_card"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        app:layout_constraintStart_toEndOf="@+id/bottom_sheet_volume"
-        app:layout_constraintTop_toTopOf="@+id/bottom_sheet_volume"
-        tools:text="Volume" />
+        android:layout_margin="16dp"
+        app:cardElevation="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_price_value">
 
-    <TextView
-        android:id="@+id/bottom_sheet_circulating_supply"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/circulating_supply"
-        android:textColor="@color/dark_gray"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/bottom_sheet_volume"
-        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_volume" />
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:padding="16dp">
 
-    <TextView
-        android:id="@+id/bottom_sheet_circulating_supply_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        app:layout_constraintStart_toEndOf="@+id/bottom_sheet_circulating_supply"
-        app:layout_constraintTop_toTopOf="@+id/bottom_sheet_circulating_supply"
-        tools:text="Circulating" />
+            <TextView
+                android:id="@+id/bottom_sheet_high_price"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:text="@string/highest_price" />
 
-    <TextView
-        android:id="@+id/bottom_sheet_total_supply"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/total_supply"
-        android:textColor="@color/dark_gray"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/bottom_sheet_circulating_supply"
-        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_circulating_supply" />
+            <TextView
+                android:id="@+id/bottom_sheet_highest_price_value"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:textAlignment="viewEnd"
+                tools:text="US$105,910" />
 
-    <TextView
-        android:id="@+id/bottom_sheet_total_supply_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        app:layout_constraintStart_toEndOf="@+id/bottom_sheet_total_supply"
-        app:layout_constraintTop_toTopOf="@+id/bottom_sheet_total_supply"
-        tools:text="Total" />
+            <TextView
+                android:id="@+id/bottom_sheet_low_price"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:text="@string/lowest_price" />
+
+            <TextView
+                android:id="@+id/bottom_sheet_lowest_price_value"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:textAlignment="viewEnd"
+                tools:text="US$104,648" />
+
+            <TextView
+                android:id="@+id/bottom_sheet_volume"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:text="@string/daily_volume" />
+
+            <TextView
+                android:id="@+id/bottom_sheet_volume_value"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:textAlignment="viewEnd"
+                tools:text="US$26.27B" />
+
+            <TextView
+                android:id="@+id/bottom_sheet_circulating_supply"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:text="@string/circulating_supply" />
+
+            <TextView
+                android:id="@+id/bottom_sheet_circulating_supply_value"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:textAlignment="viewEnd"
+                tools:text="19.87M BTC" />
+
+            <TextView
+                android:id="@+id/bottom_sheet_total_supply"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:text="@string/total_supply" />
+
+            <TextView
+                android:id="@+id/bottom_sheet_total_supply_value"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:textAlignment="viewEnd"
+                tools:text="21M BTC" />
+
+        </GridLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

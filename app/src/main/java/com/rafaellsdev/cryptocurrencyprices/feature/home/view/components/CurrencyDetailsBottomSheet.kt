@@ -68,6 +68,13 @@ private class CurrencyDetailsBottomSheetView @JvmOverloads constructor(
         binding.imgClose.onClick(dismissAction)
         binding.bottomSheetCurrencyName.text = currency?.name ?: ""
         binding.bottomSheetPriceValue.text = formatPrice(currency?.currentPrice, currencyCode)
+        val change = currency?.priceChangePercentage ?: 0.0
+        val priceColor = if (change > 0) {
+            context.getColor(R.color.positive_green)
+        } else {
+            context.getColor(R.color.orange_highlight)
+        }
+        binding.bottomSheetPriceValue.setTextColor(priceColor)
         binding.bottomSheetHighestPriceValue.text = formatPrice(currency?.highPrice, currencyCode)
         binding.bottomSheetLowestPriceValue.text = formatPrice(currency?.lowPrice, currencyCode)
         binding.bottomSheetVolumeValue.text = formatPrice(currency?.totalVolume, currencyCode)
