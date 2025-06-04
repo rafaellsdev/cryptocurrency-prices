@@ -9,6 +9,7 @@ fun currencyList() =
             symbol = "btc",
             name = "Bitcoin",
             image = "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579",
+            marketCap = 1000000.0,
             currentPrice = 42938.0,
             priceChangePercentage = -2.56888,
             highPrice = 44444.0,

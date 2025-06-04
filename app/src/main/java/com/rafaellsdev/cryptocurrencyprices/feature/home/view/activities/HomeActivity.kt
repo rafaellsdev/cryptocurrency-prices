@@ -3,6 +3,9 @@ package com.rafaellsdev.cryptocurrencyprices.feature.home.view.activities
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,7 +16,9 @@ import com.rafaellsdev.cryptocurrencyprices.databinding.HomeActivityBinding
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.adapters.CurrenciesAdapter
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.components.CurrencyDetailsBottomSheet
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.components.ErrorView
+import com.rafaellsdev.cryptocurrencyprices.R
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.state.HomeViewState
+import com.rafaellsdev.cryptocurrencyprices.feature.home.view.model.SortOption
 import com.rafaellsdev.cryptocurrencyprices.feature.home.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,6 +29,8 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
     private var currencyDialog: BottomSheetDialog? = null
     private lateinit var currenciesAdapter: CurrenciesAdapter
     private var allCurrencies: List<Currency> = emptyList()
+    private var currentQuery: String? = null
+    private var sortOption: SortOption = SortOption.MARKET_CAP
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +38,7 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
 
         setListeners()
         setupSearchView()
+        setupSortSpinner()
         observeHomeState()
         requestHomeData()
     }
@@ -45,15 +53,38 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
     private fun setupSearchView() {
         binding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                filterCurrencies(query)
+                sortAndFilterCurrencies(query)
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                filterCurrencies(newText)
+                sortAndFilterCurrencies(newText)
                 return true
             }
         })
+    }
+
+    private fun setupSortSpinner() {
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.sort_options,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.spinnerSort.adapter = adapter
+        }
+        binding.spinnerSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                sortOption = when (position) {
+                    1 -> SortOption.PRICE
+                    2 -> SortOption.CHANGE_24H
+                    else -> SortOption.MARKET_CAP
+                }
+                sortAndFilterCurrencies(currentQuery)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
     }
 
     private fun observeHomeState() {
@@ -69,9 +100,14 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
     private fun showCurrencyList(currencies: List<Currency>) {
         showSuccessState()
         allCurrencies = currencies
+        val displayed = when (sortOption) {
+            SortOption.MARKET_CAP -> currencies.sortedByDescending { it.marketCap }
+            SortOption.PRICE -> currencies.sortedByDescending { it.currentPrice }
+            SortOption.CHANGE_24H -> currencies.sortedByDescending { it.priceChangePercentage }
+        }
         if (!::currenciesAdapter.isInitialized) {
             currenciesAdapter = CurrenciesAdapter(
-                currencies,
+                displayed,
                 { item: Currency -> configureCurrencyBottomSheet(item) },
                 { id -> viewModel.isFavorite(id) },
                 { id -> viewModel.toggleFavorite(id) }
@@ -82,7 +118,7 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
                 adapter = currenciesAdapter
             }
         } else {
-            currenciesAdapter.updateCurrencies(currencies)
+            sortAndFilterCurrencies(currentQuery)
         }
     }
 
@@ -151,10 +187,12 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
         }
     }
 
-    private fun filterCurrencies(query: String?) {
+    private fun sortAndFilterCurrencies(query: String?) {
         if (!::currenciesAdapter.isInitialized) return
 
-        val filtered = if (query.isNullOrBlank()) {
+        currentQuery = query
+
+        var filtered = if (query.isNullOrBlank()) {
             allCurrencies
         } else {
             allCurrencies.filter {
@@ -162,6 +200,13 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
                     it.symbol.contains(query, ignoreCase = true)
             }
         }
+
+        filtered = when (sortOption) {
+            SortOption.MARKET_CAP -> filtered.sortedByDescending { it.marketCap }
+            SortOption.PRICE -> filtered.sortedByDescending { it.currentPrice }
+            SortOption.CHANGE_24H -> filtered.sortedByDescending { it.priceChangePercentage }
+        }
+
         currenciesAdapter.updateCurrencies(filtered)
     }
 

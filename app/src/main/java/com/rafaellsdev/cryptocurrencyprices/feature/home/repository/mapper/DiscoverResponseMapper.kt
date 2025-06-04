@@ -11,6 +11,7 @@ fun List<CurrencyResponse>.toCurrencyList() =
             symbol = it.symbol.orEmpty(),
             name = it.name.orEmpty(),
             image = it.image.orEmpty(),
+            marketCap = it.marketCap.doubleOrZero(),
             currentPrice = it.currentPrice.doubleOrZero(),
             priceChangePercentage = it.priceChangePercentage.doubleOrZero(),
             highPrice = it.highPrice.doubleOrZero(),
