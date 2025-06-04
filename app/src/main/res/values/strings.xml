@@ -25,4 +25,5 @@
         <item>EUR</item>
         <item>USD</item>
     </string-array>
+    <string name="category_all">All</string>
 </resources>

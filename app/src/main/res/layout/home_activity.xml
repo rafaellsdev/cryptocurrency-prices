@@ -97,6 +97,14 @@
             app:layout_constraintStart_toEndOf="@id/spinner_sort"
             app:layout_constraintTop_toBottomOf="@id/search_view" />
 
+        <Spinner
+            android:id="@+id/spinner_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:layout_constraintStart_toEndOf="@id/spinner_currency"
+            app:layout_constraintTop_toBottomOf="@id/search_view" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcv_currency"
             android:layout_width="match_parent"
@@ -104,7 +112,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/spinner_currency" />
+            app:layout_constraintTop_toBottomOf="@id/spinner_category" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

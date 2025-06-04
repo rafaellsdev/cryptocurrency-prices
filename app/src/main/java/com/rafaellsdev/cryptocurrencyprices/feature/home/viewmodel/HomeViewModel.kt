@@ -7,8 +7,10 @@ import com.rafaellsdev.cryptocurrencyprices.commons.ext.emit
 import com.rafaellsdev.cryptocurrencyprices.commons.ext.safeLaunch
 import com.rafaellsdev.cryptocurrencyprices.commons.model.DefaultError
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CurrencyRepository
+import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CategoryRepository
 import com.rafaellsdev.cryptocurrencyprices.commons.favorites.FavoritesRepository
 import com.rafaellsdev.cryptocurrencyprices.commons.currency.CurrencyPreferenceRepository
+import com.rafaellsdev.cryptocurrencyprices.commons.model.Category
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.state.HomeViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -17,11 +19,17 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val currencyRepository: CurrencyRepository,
     private val favoritesRepository: FavoritesRepository,
-    private val currencyPreferenceRepository: CurrencyPreferenceRepository
+    private val currencyPreferenceRepository: CurrencyPreferenceRepository,
+    private val categoryRepository: CategoryRepository
 ) : ViewModel() {
 
     private val mutableLiveDataState = MutableLiveData<HomeViewState>()
     val homeViewState: LiveData<HomeViewState> = mutableLiveDataState
+
+    private val mutableCategories = MutableLiveData<List<Category>>()
+    val categories: LiveData<List<Category>> = mutableCategories
+
+    private var selectedCategory: String? = null
 
     fun toggleFavorite(id: String) {
         favoritesRepository.toggleFavorite(id)
@@ -38,8 +46,17 @@ class HomeViewModel @Inject constructor(
     fun discoverCurrencies() = safeLaunch(::handleError) {
         mutableLiveDataState.emit(HomeViewState.Loading)
 
-        val currencies = currencyRepository.discoverCurrencies()
+        val currencies = currencyRepository.discoverCurrencies(selectedCategory)
         mutableLiveDataState.emit(HomeViewState.Success(currencies))
+    }
+
+    fun loadCategories() = safeLaunch(::handleError) {
+        val categories = categoryRepository.getCategories()
+        mutableCategories.emit(categories)
+    }
+
+    fun setSelectedCategory(id: String?) {
+        selectedCategory = id
     }
 
     private fun handleError(error: DefaultError) {

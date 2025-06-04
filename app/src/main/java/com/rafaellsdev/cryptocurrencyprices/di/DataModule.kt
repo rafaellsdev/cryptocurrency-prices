@@ -3,6 +3,8 @@ package com.rafaellsdev.cryptocurrencyprices.di
 import com.rafaellsdev.cryptocurrencyprices.commons.const.URLs.BASE_URL
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CurrencyRepository
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CurrencyRepositoryImp
+import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CategoryRepository
+import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CategoryRepositoryImp
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.service.DiscoverService
 import com.rafaellsdev.cryptocurrencyprices.commons.currency.CurrencyPreferenceRepository
 import com.rafaellsdev.cryptocurrencyprices.commons.currency.CurrencyPreferenceRepositoryImp
@@ -46,6 +48,13 @@ object DataModule {
         currencyPreferenceRepository: CurrencyPreferenceRepository
     ): CurrencyRepository =
         CurrencyRepositoryImp(discoverService, currencyPreferenceRepository)
+
+    @Singleton
+    @Provides
+    fun provideCategoryRepository(
+        discoverService: DiscoverService
+    ): CategoryRepository =
+        CategoryRepositoryImp(discoverService)
 
     @Singleton
     @Provides

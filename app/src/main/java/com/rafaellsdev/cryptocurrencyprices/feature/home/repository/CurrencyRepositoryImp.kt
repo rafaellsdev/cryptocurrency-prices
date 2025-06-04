@@ -12,10 +12,10 @@ class CurrencyRepositoryImp @Inject constructor(
     private val discoverService: DiscoverService,
     private val currencyPreferenceRepository: CurrencyPreferenceRepository
 ) : CurrencyRepository {
-    override suspend fun discoverCurrencies(): List<Currency> =
+    override suspend fun discoverCurrencies(category: String?): List<Currency> =
         withContext(Dispatchers.IO) {
             val currency = currencyPreferenceRepository.getSelectedCurrency()
-            discoverService.discoverCurrencies(currency = currency)
+            discoverService.discoverCurrencies(currency = currency, category = category)
                 .toCurrencyList()
         }
 }

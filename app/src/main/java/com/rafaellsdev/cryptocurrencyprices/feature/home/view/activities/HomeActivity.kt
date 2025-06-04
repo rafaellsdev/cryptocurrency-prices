@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.rafaellsdev.cryptocurrencyprices.commons.ext.observe
 import com.rafaellsdev.cryptocurrencyprices.commons.model.Currency
+import com.rafaellsdev.cryptocurrencyprices.commons.model.Category
 import com.rafaellsdev.cryptocurrencyprices.databinding.HomeActivityBinding
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.adapters.CurrenciesAdapter
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.components.CurrencyDetailsBottomSheet
@@ -29,6 +30,7 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
     private var currencyDialog: BottomSheetDialog? = null
     private lateinit var currenciesAdapter: CurrenciesAdapter
     private var allCurrencies: List<Currency> = emptyList()
+    private var categories: List<Category> = emptyList()
     private var currentQuery: String? = null
     private var sortOption: SortOption = SortOption.MARKET_CAP
 
@@ -40,8 +42,11 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
         setupSearchView()
         setupSortSpinner()
         setupCurrencySpinner()
+        setupCategorySpinner()
         observeHomeState()
+        observeCategories()
         requestHomeData()
+        viewModel.loadCategories()
     }
 
     private fun setListeners() {
@@ -115,6 +120,29 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+    }
+
+    private fun setupCategorySpinner() {
+        binding.spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                val selected = if (position == 0) null else categories[position - 1].id
+                viewModel.setSelectedCategory(selected)
+                requestHomeData()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+    }
+
+    private fun observeCategories() {
+        observe(viewModel.categories) { list ->
+            categories = list
+            val names = mutableListOf(getString(R.string.category_all))
+            names.addAll(list.map { it.name })
+            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, names)
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.spinnerCategory.adapter = adapter
         }
     }
 

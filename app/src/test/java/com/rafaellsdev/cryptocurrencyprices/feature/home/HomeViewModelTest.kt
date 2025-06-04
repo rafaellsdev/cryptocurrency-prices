@@ -6,6 +6,8 @@ import com.nhaarman.mockitokotlin2.verify
 import com.rafaellsdev.cryptocurrencyprices.factory.currencyList
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CurrencyRepository
 import com.rafaellsdev.cryptocurrencyprices.commons.favorites.FavoritesRepository
+import com.rafaellsdev.cryptocurrencyprices.commons.currency.CurrencyPreferenceRepository
+import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CategoryRepository
 import com.rafaellsdev.cryptocurrencyprices.feature.home.viewmodel.HomeViewModel
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.state.HomeViewState
 import kotlinx.coroutines.Dispatchers
@@ -42,6 +44,12 @@ class HomeViewModelTest {
     lateinit var favoritesRepository: FavoritesRepository
 
     @Mock
+    lateinit var currencyPreferenceRepository: CurrencyPreferenceRepository
+
+    @Mock
+    lateinit var categoryRepository: CategoryRepository
+
+    @Mock
     lateinit var observer: Observer<HomeViewState>
 
     private lateinit var viewModel: HomeViewModel
@@ -49,7 +57,13 @@ class HomeViewModelTest {
     @Before
     fun setup() {
         Dispatchers.setMain(testDispatcher)
-        viewModel = HomeViewModel(repository, favoritesRepository)
+        Mockito.`when`(currencyPreferenceRepository.getSelectedCurrency()).thenReturn("eur")
+        viewModel = HomeViewModel(
+            repository,
+            favoritesRepository,
+            currencyPreferenceRepository,
+            categoryRepository
+        )
         viewModel.homeViewState.observeForever(observer)
     }
 
@@ -57,7 +71,7 @@ class HomeViewModelTest {
     @Test
     fun whenRequestDiscoverSuccessShouldEmitLoadingThenSuccess() = runBlockingTest {
         // Given
-        Mockito.`when`(repository.discoverCurrencies()).thenReturn(currencyList())
+        Mockito.`when`(repository.discoverCurrencies(null)).thenReturn(currencyList())
 
         // When
         viewModel.discoverCurrencies()
@@ -73,7 +87,7 @@ class HomeViewModelTest {
     @Test
     fun whenRequestDiscoverFailsShouldEmitLoadingThenFailure() = runBlockingTest {
         // Given
-        Mockito.`when`(repository.discoverCurrencies()).thenThrow(RuntimeException())
+        Mockito.`when`(repository.discoverCurrencies(null)).thenThrow(RuntimeException())
 
         // When
         viewModel.discoverCurrencies()
