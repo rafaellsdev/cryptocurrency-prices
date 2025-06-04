@@ -70,9 +70,12 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
         showSuccessState()
         allCurrencies = currencies
         if (!::currenciesAdapter.isInitialized) {
-            currenciesAdapter = CurrenciesAdapter(currencies) { item: Currency ->
-                configureCurrencyBottomSheet(item)
-            }
+            currenciesAdapter = CurrenciesAdapter(
+                currencies,
+                { item: Currency -> configureCurrencyBottomSheet(item) },
+                { id -> viewModel.isFavorite(id) },
+                { id -> viewModel.toggleFavorite(id) }
+            )
             with(binding.rcvCurrency) {
                 layoutManager = LinearLayoutManager(binding.cstContent.context)
                 setHasFixedSize(true)

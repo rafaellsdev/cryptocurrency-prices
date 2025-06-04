@@ -7,17 +7,25 @@ import com.rafaellsdev.cryptocurrencyprices.commons.ext.emit
 import com.rafaellsdev.cryptocurrencyprices.commons.ext.safeLaunch
 import com.rafaellsdev.cryptocurrencyprices.commons.model.DefaultError
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CurrencyRepository
+import com.rafaellsdev.cryptocurrencyprices.commons.favorites.FavoritesRepository
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.state.HomeViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val currencyRepository: CurrencyRepository
+    private val currencyRepository: CurrencyRepository,
+    private val favoritesRepository: FavoritesRepository
 ) : ViewModel() {
 
     private val mutableLiveDataState = MutableLiveData<HomeViewState>()
     val homeViewState: LiveData<HomeViewState> = mutableLiveDataState
+
+    fun toggleFavorite(id: String) {
+        favoritesRepository.toggleFavorite(id)
+    }
+
+    fun isFavorite(id: String): Boolean = favoritesRepository.isFavorite(id)
 
     fun discoverCurrencies() = safeLaunch(::handleError) {
         mutableLiveDataState.emit(HomeViewState.Loading)
