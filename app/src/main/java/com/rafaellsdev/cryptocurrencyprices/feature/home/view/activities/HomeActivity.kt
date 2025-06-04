@@ -43,7 +43,7 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
     }
 
     private fun setupSearchView() {
-        binding.search_view.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+        binding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 filterCurrencies(query)
                 return true
@@ -155,7 +155,7 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
             allCurrencies
         } else {
             allCurrencies.filter {
-                it.name.contains(query, ignoreCase = true) ||
+                it.name!!.contains(query, ignoreCase = true) ||
                     it.symbol.contains(query, ignoreCase = true)
             }
         }
