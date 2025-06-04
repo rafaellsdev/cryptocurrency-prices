@@ -70,6 +70,9 @@ private class CurrencyDetailsBottomSheetView @JvmOverloads constructor(
         binding.bottomSheetPriceValue.text = formatPrice(currency?.currentPrice, currencyCode)
         binding.bottomSheetHighestPriceValue.text = formatPrice(currency?.highPrice, currencyCode)
         binding.bottomSheetLowestPriceValue.text = formatPrice(currency?.lowPrice, currencyCode)
+        binding.bottomSheetVolumeValue.text = formatPrice(currency?.totalVolume, currencyCode)
+        binding.bottomSheetCirculatingSupplyValue.text = formatNumber(currency?.circulatingSupply)
+        binding.bottomSheetTotalSupplyValue.text = formatNumber(currency?.totalSupply)
 
         setHeight(fullExpand)
     }
@@ -79,6 +82,12 @@ private class CurrencyDetailsBottomSheetView @JvmOverloads constructor(
         format.maximumFractionDigits = 0
         format.currency = getInstance(currencyCode)
         return format.format(price)
+    }
+
+    private fun formatNumber(value: Any?): String {
+        val format: NumberFormat = NumberFormat.getNumberInstance()
+        format.maximumFractionDigits = 0
+        return format.format(value)
     }
 
 

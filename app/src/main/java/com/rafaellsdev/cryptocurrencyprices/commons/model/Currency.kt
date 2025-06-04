@@ -9,5 +9,8 @@ data class Currency(
     val currentPrice: Double,
     val priceChangePercentage: Double,
     val highPrice: Double,
-    val lowPrice: Double
+    val lowPrice: Double,
+    val totalVolume: Double,
+    val circulatingSupply: Double,
+    val totalSupply: Double
 )

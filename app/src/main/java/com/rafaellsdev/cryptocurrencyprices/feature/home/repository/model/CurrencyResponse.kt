@@ -16,5 +16,11 @@ data class CurrencyResponse(
     @SerializedName("high_24h")
     val highPrice: Double?,
     @SerializedName("low_24h")
-    val lowPrice: Double?
+    val lowPrice: Double?,
+    @SerializedName("total_volume")
+    val totalVolume: Double?,
+    @SerializedName("circulating_supply")
+    val circulatingSupply: Double?,
+    @SerializedName("total_supply")
+    val totalSupply: Double?
 )
