@@ -27,10 +27,11 @@ class CurrenciesAdapter(
         holder.itemView.setOnClickListener { clickListener(currentItem) }
     }
 
-    // getItemCount() is no longer needed as ListAdapter handles it internally.
+    override fun getItemCount(): Int = currenciesList.size
 
     fun updateCurrencies(currencies: List<Currency>) {
-        submitList(currencies)
+        currenciesList = currencies
+        notifyDataSetChanged()
     }
 
     inner class ViewHolder(private val itemBinding: CryptoCurrencyItemBinding) :

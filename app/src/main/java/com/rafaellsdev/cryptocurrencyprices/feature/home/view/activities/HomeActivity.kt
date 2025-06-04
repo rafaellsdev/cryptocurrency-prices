@@ -155,7 +155,7 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
             allCurrencies
         } else {
             allCurrencies.filter {
-                it.name?.contains(query, ignoreCase = true) == true ||
+                it.name!!.contains(query, ignoreCase = true) ||
                     it.symbol.contains(query, ignoreCase = true)
             }
         }
