@@ -6,6 +6,7 @@ import android.view.View.VISIBLE
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.content.Intent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +17,7 @@ import com.rafaellsdev.cryptocurrencyprices.databinding.HomeActivityBinding
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.adapters.CurrenciesAdapter
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.components.CurrencyDetailsBottomSheet
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.components.ErrorView
+import com.rafaellsdev.cryptocurrencyprices.feature.home.view.activities.PriceChartActivity
 import com.rafaellsdev.cryptocurrencyprices.R
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.state.HomeViewState
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.model.SortOption
@@ -175,6 +177,14 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
         return CurrencyDetailsBottomSheet.createDialog(
             this,
             dismissAction = ::hideBottomSheet,
+            showChartAction = {
+                startActivity(
+                    Intent(this, PriceChartActivity::class.java).apply {
+                        putExtra(PriceChartActivity.EXTRA_ID, currency.id)
+                        putExtra(PriceChartActivity.EXTRA_NAME, currency.name)
+                    }
+                )
+            },
             fullExpand = false,
             currency = currency
         )

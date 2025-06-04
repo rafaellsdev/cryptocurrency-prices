@@ -2,6 +2,7 @@ package com.rafaellsdev.cryptocurrencyprices.feature.home.repository
 
 import com.rafaellsdev.cryptocurrencyprices.commons.model.Currency
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.mapper.toCurrencyList
+import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.mapper.toPriceList
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.service.DiscoverService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -14,5 +15,10 @@ class CurrencyRepositoryImp @Inject constructor(
         withContext(Dispatchers.IO) {
             discoverService.discoverCurrencies()
                 .toCurrencyList()
+        }
+
+    override suspend fun getMarketChart(id: String, days: Int): List<Pair<Long, Double>> =
+        withContext(Dispatchers.IO) {
+            discoverService.getMarketChart(id, days = days).toPriceList()
         }
 }

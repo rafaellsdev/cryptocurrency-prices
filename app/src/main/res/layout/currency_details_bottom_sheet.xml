@@ -111,4 +111,14 @@
         app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_highest_price_value"
         tools:text="Lowest price" />
 
+    <Button
+        android:id="@+id/btn_show_chart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/show_chart"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_lowest_price_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
