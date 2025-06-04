@@ -4,6 +4,9 @@ import com.rafaellsdev.cryptocurrencyprices.commons.const.URLs.BASE_URL
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CurrencyRepository
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CurrencyRepositoryImp
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.service.DiscoverService
+import com.rafaellsdev.cryptocurrencyprices.commons.favorites.FavoritesRepository
+import com.rafaellsdev.cryptocurrencyprices.commons.favorites.FavoritesRepositoryImp
+import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,4 +36,9 @@ object DataModule {
     @Provides
     fun provideDiscoverRepository(discoverService: DiscoverService): CurrencyRepository =
         CurrencyRepositoryImp(discoverService)
+
+    @Singleton
+    @Provides
+    fun provideFavoritesRepository(preferences: SharedPreferences): FavoritesRepository =
+        FavoritesRepositoryImp(preferences)
 }

@@ -10,7 +10,9 @@ import java.text.NumberFormat
 
 class CurrenciesAdapter(
     private var currenciesList: List<Currency>,
-    val clickListener: (Currency) -> Unit
+    val clickListener: (Currency) -> Unit,
+    private val isFavorite: (String) -> Boolean,
+    private val toggleFavorite: (String) -> Unit
 ) :
     RecyclerView.Adapter<CurrenciesAdapter.ViewHolder>() {
 
@@ -43,6 +45,17 @@ class CurrenciesAdapter(
                 String.format("%.2f", currency.priceChangePercentage) + "%"
             itemBinding.imgCurrencyIcon
             Picasso.get().load(currency.image).into(itemBinding.imgCurrencyIcon)
+
+            val favoriteRes = if (isFavorite(currency.id)) {
+                com.rafaellsdev.cryptocurrencyprices.R.drawable.ic_star
+            } else {
+                com.rafaellsdev.cryptocurrencyprices.R.drawable.ic_star_border
+            }
+            itemBinding.imgFavorite.setImageResource(favoriteRes)
+            itemBinding.imgFavorite.setOnClickListener {
+                toggleFavorite(currency.id)
+                notifyItemChanged(adapterPosition)
+            }
         }
     }
 
