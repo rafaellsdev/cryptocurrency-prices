@@ -21,6 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.rafaellsdev.cryptocurrencyprices.feature.home.view.activities.PriceChartActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

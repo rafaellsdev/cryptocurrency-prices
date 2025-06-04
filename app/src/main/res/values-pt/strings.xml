@@ -15,6 +15,12 @@
     <string name="error_title_whoops">Ops!</string>
     <string name="error_message_generic">Ocorreu um erro.</string>
     <string name="error_button_try_again">Tentar novamente</string>
+    <string name="show_chart">Mostrar gráfico</string>
+    <string-array name="chart_periods">
+        <item>24h</item>
+        <item>7d</item>
+        <item>30d</item>
+    </string-array>
     <string-array name="sort_options">
         <item>Valor de mercado</item>
         <item>Preço</item>

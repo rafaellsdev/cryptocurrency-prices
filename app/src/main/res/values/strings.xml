@@ -15,6 +15,12 @@
     <string name="error_title_whoops">Whoops!</string>
     <string name="error_message_generic">We have an error.</string>
     <string name="error_button_try_again">Try again</string>
+    <string name="show_chart">Show Chart</string>
+    <string-array name="chart_periods">
+        <item>24h</item>
+        <item>7d</item>
+        <item>30d</item>
+    </string-array>
     <string-array name="sort_options">
         <item>Market Cap</item>
         <item>Price</item>

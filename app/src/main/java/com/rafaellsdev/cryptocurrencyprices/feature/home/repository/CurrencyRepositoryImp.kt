@@ -15,4 +15,9 @@ class CurrencyRepositoryImp @Inject constructor(
             discoverService.discoverCurrencies()
                 .toCurrencyList()
         }
+
+    override suspend fun getMarketChart(id: String, days: Int): List<Pair<Long, Double>> =
+        withContext(Dispatchers.IO) {
+            discoverService.getMarketChart(id, days = days).toPriceList()
+        }
 }

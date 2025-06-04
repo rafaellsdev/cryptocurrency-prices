@@ -14,4 +14,11 @@ interface DiscoverService {
         @Query("page") page: Int = 1,
         @Query("sparkline") sparkline: Boolean = false
     ): List<CurrencyResponse>
+
+    @GET("coins/{id}/market_chart")
+    suspend fun getMarketChart(
+        @Path("id") id: String,
+        @Query("vs_currency") currency: String = "eur",
+        @Query("days") days: Int
+    ): MarketChartResponse
 }

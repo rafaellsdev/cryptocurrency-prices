@@ -22,12 +22,13 @@ class CurrencyDetailsBottomSheet private constructor() {
         fun createDialog(
             context: Context,
             dismissAction: () -> Unit,
+            showChartAction: () -> Unit,
             fullExpand: Boolean = false,
             currency: Currency? = null
         ): BottomSheetDialog {
 
             val contentView = CurrencyDetailsBottomSheetView(context).apply {
-                configure(dismissAction, fullExpand, currency)
+                configure(dismissAction, showChartAction, fullExpand, currency)
             }
 
             val dialog = BottomSheetDialog(context)
@@ -60,10 +61,12 @@ private class CurrencyDetailsBottomSheetView @JvmOverloads constructor(
 
     fun configure(
         dismissAction: () -> Unit,
+        showChartAction: () -> Unit,
         fullExpand: Boolean = false,
         currency: Currency?
     ) {
         binding.imgClose.onClick(dismissAction)
+        binding.btnShowChart.onClick(showChartAction)
         binding.bottomSheetCurrencyName.text = currency?.name ?: ""
         binding.bottomSheetPriceValue.text = formatPrice(currency?.currentPrice)
         binding.bottomSheetHighestPriceValue.text = formatPrice(currency?.highPrice)
