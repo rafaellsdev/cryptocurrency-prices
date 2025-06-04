@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Precios de Criptomonedas</string>
+    <string name="content_description_close_button">Botón cerrar</string>
+    <string name="currency_name">Nombre de la moneda</string>
+    <string name="currency_price">Precio: </string>
+    <string name="highest_price">Precio más alto en 24 horas: </string>
+    <string name="lowest_price">Precio más bajo en 24 horas: </string>
+    <string name="content_description_soccer_player_celebrating">un jugador de fútbol celebrando</string>
+    <string name="content_description_back_button">Botón volver</string>
+    <string name="content_description_symbol_to_pay_attention">Un símbolo para prestar atención</string>
+    <string name="now_you_can_bet_using_the_following">Ahora puedes apostar utilizando las siguientes</string>
+    <string name="cryptocurrencies">criptomonedas:</string>
+    <string name="search_hint">Buscar monedas</string>
+    <string name="header_cryptocurrencies_title">Precios de Criptomonedas</string>
+    <string name="error_title_whoops">\u00a1Vaya!</string>
+    <string name="error_message_generic">Ha ocurrido un error.</string>
+    <string name="error_button_try_again">Intentar de nuevo</string>
+</resources>
