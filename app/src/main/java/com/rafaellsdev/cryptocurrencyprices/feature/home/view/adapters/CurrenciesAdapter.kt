@@ -9,7 +9,7 @@ import com.squareup.picasso.Picasso
 import java.text.NumberFormat
 
 class CurrenciesAdapter(
-    private val currenciesList: List<Currency>,
+    private var currenciesList: List<Currency>,
     val clickListener: (Currency) -> Unit
 ) :
     RecyclerView.Adapter<CurrenciesAdapter.ViewHolder>() {
@@ -28,6 +28,11 @@ class CurrenciesAdapter(
     }
 
     override fun getItemCount(): Int = currenciesList.size
+
+    fun updateCurrencies(currencies: List<Currency>) {
+        currenciesList = currencies
+        notifyDataSetChanged()
+    }
 
     inner class ViewHolder(private val itemBinding: CryptoCurrencyItemBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {

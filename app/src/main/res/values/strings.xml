@@ -10,4 +10,5 @@
     <string name="content_description_symbol_to_pay_attention">A symbol to pay attention</string>
     <string name="now_you_can_bet_using_the_following">Now you can bet using the following</string>
     <string name="cryptocurrencies">cryptocurrencies:</string>
+    <string name="search_hint">Search coins</string>
 </resources>
