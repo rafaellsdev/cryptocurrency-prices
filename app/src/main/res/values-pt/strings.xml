@@ -3,8 +3,8 @@
     <string name="content_description_close_button">Botão fechar</string>
     <string name="currency_name">Nome da moeda</string>
     <string name="currency_price">Preço: </string>
-    <string name="highest_price">Maior preço nas últimas 24 horas: </string>
-    <string name="lowest_price">Menor preço nas últimas 24 horas: </string>
+    <string name="highest_price">Maior preço/24hrs: </string>
+    <string name="lowest_price">Menor preço/24hrs: </string>
     <string name="content_description_soccer_player_celebrating">um jogador de futebol comemorando</string>
     <string name="content_description_back_button">Botão voltar</string>
     <string name="content_description_symbol_to_pay_attention">Um símbolo para prestar atenção</string>

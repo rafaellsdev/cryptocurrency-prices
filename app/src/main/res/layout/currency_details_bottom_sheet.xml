@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cst_content"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -12,7 +13,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:alpha="0.1"
-        android:scaleType="centerCrop"
         android:src="@drawable/footballer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,6 +35,7 @@
         android:layout_height="96dp"
         android:layout_marginTop="48dp"
         android:contentDescription="@string/content_description_coin_icon"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_close"
@@ -84,57 +85,63 @@
 
             <TextView
                 android:id="@+id/bottom_sheet_high_price"
-                style="@style/TextAppearance.Material3.BodyMedium"
-                android:text="@string/highest_price" />
+                style="@style/TextAppearance.Material3.BodyLarge"
+                android:text="@string/highest_price"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/bottom_sheet_highest_price_value"
                 style="@style/TextAppearance.Material3.BodyMedium"
-                android:textAlignment="viewEnd"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
                 tools:text="US$105,910" />
 
             <TextView
                 android:id="@+id/bottom_sheet_low_price"
-                style="@style/TextAppearance.Material3.BodyMedium"
-                android:text="@string/lowest_price" />
+                style="@style/TextAppearance.Material3.BodyLarge"
+                android:text="@string/lowest_price"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/bottom_sheet_lowest_price_value"
                 style="@style/TextAppearance.Material3.BodyMedium"
-                android:textAlignment="viewEnd"
+                android:layout_gravity="end"
                 tools:text="US$104,648" />
 
             <TextView
                 android:id="@+id/bottom_sheet_volume"
-                style="@style/TextAppearance.Material3.BodyMedium"
-                android:text="@string/daily_volume" />
+                style="@style/TextAppearance.Material3.BodyLarge"
+                android:text="@string/daily_volume"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/bottom_sheet_volume_value"
                 style="@style/TextAppearance.Material3.BodyMedium"
-                android:textAlignment="viewEnd"
+                android:layout_gravity="end"
                 tools:text="US$26.27B" />
 
             <TextView
                 android:id="@+id/bottom_sheet_circulating_supply"
-                style="@style/TextAppearance.Material3.BodyMedium"
-                android:text="@string/circulating_supply" />
+                style="@style/TextAppearance.Material3.BodyLarge"
+                android:text="@string/circulating_supply"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/bottom_sheet_circulating_supply_value"
                 style="@style/TextAppearance.Material3.BodyMedium"
-                android:textAlignment="viewEnd"
+                android:layout_gravity="end"
                 tools:text="19.87M BTC" />
 
             <TextView
                 android:id="@+id/bottom_sheet_total_supply"
-                style="@style/TextAppearance.Material3.BodyMedium"
-                android:text="@string/total_supply" />
+                style="@style/TextAppearance.Material3.BodyLarge"
+                android:text="@string/total_supply"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/bottom_sheet_total_supply_value"
                 style="@style/TextAppearance.Material3.BodyMedium"
-                android:textAlignment="viewEnd"
+                android:layout_gravity="end"
                 tools:text="21M BTC" />
 
         </GridLayout>

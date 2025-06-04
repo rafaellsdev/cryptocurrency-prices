@@ -2,13 +2,16 @@ package com.rafaellsdev.cryptocurrencyprices.feature.home.view.components
 
 import android.content.Context
 import android.graphics.Color
+import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.rafaellsdev.cryptocurrencyprices.R
 import com.rafaellsdev.cryptocurrencyprices.commons.ext.onClick
 import com.rafaellsdev.cryptocurrencyprices.commons.model.Currency
 import com.rafaellsdev.cryptocurrencyprices.databinding.CurrencyDetailsBottomSheetBinding
@@ -59,6 +62,7 @@ private class CurrencyDetailsBottomSheetView @JvmOverloads constructor(
         )
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     fun configure(
         dismissAction: () -> Unit,
         fullExpand: Boolean = false,

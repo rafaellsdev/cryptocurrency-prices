@@ -70,13 +70,11 @@ class HomeFragment : Fragment(), ErrorView.ErrorListener {
 
     private fun setListeners() {
         binding.errorViewContent.setup(this)
-        binding.toolbar.setOnClickListener {
-            requireActivity().onBackPressed()
-        }
     }
 
     private fun setupSearchView() {
-        binding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+        binding.searchView.setOnQueryTextListener(object :
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 sortAndFilterCurrencies(query)
                 return true
@@ -99,7 +97,12 @@ class HomeFragment : Fragment(), ErrorView.ErrorListener {
             binding.spinnerSort.adapter = adapter
         }
         binding.spinnerSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 sortOption = when (position) {
                     1 -> SortOption.PRICE
                     2 -> SortOption.CHANGE_24H
@@ -129,17 +132,23 @@ class HomeFragment : Fragment(), ErrorView.ErrorListener {
             binding.spinnerCurrency.setSelection(index)
         }
 
-        binding.spinnerCurrency.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                val selected = parent.getItemAtPosition(position) as String
-                if (selected.lowercase() != viewModel.getFiatCurrency()) {
-                    viewModel.setFiatCurrency(selected.lowercase())
-                    requestHomeData()
+        binding.spinnerCurrency.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val selected = parent.getItemAtPosition(position) as String
+                    if (selected.lowercase() != viewModel.getFiatCurrency()) {
+                        viewModel.setFiatCurrency(selected.lowercase())
+                        requestHomeData()
+                    }
                 }
-            }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {}
-        }
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
     }
 
     private fun setupCategorySpinner() {
@@ -154,20 +163,28 @@ class HomeFragment : Fragment(), ErrorView.ErrorListener {
             binding.spinnerCategory.adapter = adapter
         }
 
-        binding.spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                selectedCategory = if (position == 0) null else viewModel.coinCategories.value?.get(position - 1)?.id
-                requestHomeData()
-            }
+        binding.spinnerCategory.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    selectedCategory =
+                        if (position == 0) null else viewModel.coinCategories.value?.get(position - 1)?.id
+                    requestHomeData()
+                }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {}
-        }
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
     }
 
     private fun setupTrendingRecycler() {
         trendingAdapter = TrendingAdapter(emptyList())
         with(binding.rcvTrending) {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = trendingAdapter
         }
     }
@@ -295,7 +312,7 @@ class HomeFragment : Fragment(), ErrorView.ErrorListener {
         } else {
             allCurrencies.filter {
                 it.name!!.contains(query, ignoreCase = true) ||
-                    it.symbol.contains(query, ignoreCase = true)
+                        it.symbol.contains(query, ignoreCase = true)
             }
         }
 
