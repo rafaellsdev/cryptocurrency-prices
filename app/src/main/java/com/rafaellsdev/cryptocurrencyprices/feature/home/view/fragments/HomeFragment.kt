@@ -8,6 +8,8 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.text.TextWatcher
 import android.text.Editable
+import com.rafaellsdev.cryptocurrencyprices.commons.ext.showKeyboard
+import com.rafaellsdev.cryptocurrencyprices.commons.ext.hideKeyboard
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -83,6 +85,10 @@ class HomeFragment : Fragment(), ErrorView.ErrorListener {
         val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_list_item_1)
         binding.autoCompleteSearch.setAdapter(adapter)
 
+        binding.searchContainer.setOnClickListener {
+            binding.autoCompleteSearch.showKeyboard()
+        }
+
         binding.autoCompleteSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -93,12 +99,17 @@ class HomeFragment : Fragment(), ErrorView.ErrorListener {
             override fun afterTextChanged(s: Editable?) {}
         })
 
+        binding.autoCompleteSearch.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) binding.autoCompleteSearch.hideKeyboard()
+        }
+
         binding.autoCompleteSearch.setOnItemClickListener { _, _, position, _ ->
             val result = viewModel.searchResults.value?.getOrNull(position)
             val query = result?.symbol ?: ""
             if (query.isNotBlank()) {
                 binding.autoCompleteSearch.setText(query, false)
                 sortAndFilterCurrencies(query)
+                binding.autoCompleteSearch.hideKeyboard()
             }
         }
 
