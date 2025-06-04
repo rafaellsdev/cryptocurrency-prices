@@ -10,6 +10,10 @@ import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CategoryRepo
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.service.DiscoverService
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.service.TrendingService
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.service.CategoryService
+import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.NewsRepository
+import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.NewsRepositoryImp
+import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.service.NewsService
+import com.rafaellsdev.cryptocurrencyprices.commons.const.URLs.NEWS_BASE_URL
 import com.rafaellsdev.cryptocurrencyprices.commons.currency.CurrencyPreferenceRepository
 import com.rafaellsdev.cryptocurrencyprices.commons.currency.CurrencyPreferenceRepositoryImp
 import com.rafaellsdev.cryptocurrencyprices.commons.favorites.FavoritesRepository
@@ -77,4 +81,18 @@ object DataModule {
     @Provides
     fun provideFavoritesRepository(preferences: SharedPreferences): FavoritesRepository =
         FavoritesRepositoryImp(preferences)
+
+    @Singleton
+    @Provides
+    fun provideNewsService(): NewsService =
+        Retrofit.Builder()
+            .baseUrl(NEWS_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(NewsService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideNewsRepository(newsService: NewsService): NewsRepository =
+        NewsRepositoryImp(newsService)
 }
