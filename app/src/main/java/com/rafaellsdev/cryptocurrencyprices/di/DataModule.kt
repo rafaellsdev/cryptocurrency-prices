@@ -1,6 +1,9 @@
 package com.rafaellsdev.cryptocurrencyprices.di
 
 import com.rafaellsdev.cryptocurrencyprices.commons.const.URLs.BASE_URL
+import com.rafaellsdev.cryptocurrencyprices.commons.local.AppDatabase
+import com.rafaellsdev.cryptocurrencyprices.commons.local.CurrencyDao
+import com.rafaellsdev.cryptocurrencyprices.commons.local.TrendingCoinDao
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CurrencyRepository
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CurrencyRepositoryImp
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.TrendingRepository
@@ -19,6 +22,8 @@ import com.rafaellsdev.cryptocurrencyprices.commons.currency.CurrencyPreferenceR
 import com.rafaellsdev.cryptocurrencyprices.commons.favorites.FavoritesRepository
 import com.rafaellsdev.cryptocurrencyprices.commons.favorites.FavoritesRepositoryImp
 import android.content.SharedPreferences
+import com.rafaellsdev.cryptocurrencyprices.BaseApplication
+import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,6 +35,21 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DataModule {
+
+    @Singleton
+    @Provides
+    fun provideDatabase(app: BaseApplication): AppDatabase =
+        Room.databaseBuilder(app, AppDatabase::class.java, "prices.db").build()
+
+    @Singleton
+    @Provides
+    fun provideCurrencyDao(database: AppDatabase): CurrencyDao =
+        database.currencyDao()
+
+    @Singleton
+    @Provides
+    fun provideTrendingCoinDao(database: AppDatabase): TrendingCoinDao =
+        database.trendingCoinDao()
 
     @Singleton
     @Provides
@@ -63,9 +83,10 @@ object DataModule {
     @Provides
     fun provideDiscoverRepository(
         discoverService: DiscoverService,
-        currencyPreferenceRepository: CurrencyPreferenceRepository
+        currencyPreferenceRepository: CurrencyPreferenceRepository,
+        currencyDao: CurrencyDao
     ): CurrencyRepository =
-        CurrencyRepositoryImp(discoverService, currencyPreferenceRepository)
+        CurrencyRepositoryImp(discoverService, currencyPreferenceRepository, currencyDao)
 
     @Singleton
     @Provides
@@ -74,8 +95,11 @@ object DataModule {
 
     @Singleton
     @Provides
-    fun provideTrendingRepository(trendingService: TrendingService): TrendingRepository =
-        TrendingRepositoryImp(trendingService)
+    fun provideTrendingRepository(
+        trendingService: TrendingService,
+        trendingCoinDao: TrendingCoinDao
+    ): TrendingRepository =
+        TrendingRepositoryImp(trendingService, trendingCoinDao)
 
     @Singleton
     @Provides
