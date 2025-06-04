@@ -111,4 +111,61 @@
         app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_highest_price_value"
         tools:text="Lowest price" />
 
+    <TextView
+        android:id="@+id/bottom_sheet_volume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/daily_volume"
+        android:textColor="@color/dark_gray"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/bottom_sheet_low_price"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_low_price" />
+
+    <TextView
+        android:id="@+id/bottom_sheet_volume_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        app:layout_constraintStart_toEndOf="@+id/bottom_sheet_volume"
+        app:layout_constraintTop_toTopOf="@+id/bottom_sheet_volume"
+        tools:text="Volume" />
+
+    <TextView
+        android:id="@+id/bottom_sheet_circulating_supply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/circulating_supply"
+        android:textColor="@color/dark_gray"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/bottom_sheet_volume"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_volume" />
+
+    <TextView
+        android:id="@+id/bottom_sheet_circulating_supply_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        app:layout_constraintStart_toEndOf="@+id/bottom_sheet_circulating_supply"
+        app:layout_constraintTop_toTopOf="@+id/bottom_sheet_circulating_supply"
+        tools:text="Circulating" />
+
+    <TextView
+        android:id="@+id/bottom_sheet_total_supply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/total_supply"
+        android:textColor="@color/dark_gray"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/bottom_sheet_circulating_supply"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_circulating_supply" />
+
+    <TextView
+        android:id="@+id/bottom_sheet_total_supply_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        app:layout_constraintStart_toEndOf="@+id/bottom_sheet_total_supply"
+        app:layout_constraintTop_toTopOf="@+id/bottom_sheet_total_supply"
+        tools:text="Total" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

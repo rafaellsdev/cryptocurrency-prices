@@ -29,4 +29,7 @@
     <string name="all_categories">Todas</string>
 
     <string name="trending">Tendências</string>
+    <string name="daily_volume">Volume diário: </string>
+    <string name="circulating_supply">Oferta em circulação: </string>
+    <string name="total_supply">Oferta total: </string>
 </resources>

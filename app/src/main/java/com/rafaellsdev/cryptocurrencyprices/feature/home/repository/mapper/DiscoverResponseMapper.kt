@@ -15,6 +15,9 @@ fun List<CurrencyResponse>.toCurrencyList() =
             currentPrice = it.currentPrice.doubleOrZero(),
             priceChangePercentage = it.priceChangePercentage.doubleOrZero(),
             highPrice = it.highPrice.doubleOrZero(),
-            lowPrice = it.lowPrice.doubleOrZero()
+            lowPrice = it.lowPrice.doubleOrZero(),
+            totalVolume = it.totalVolume.doubleOrZero(),
+            circulatingSupply = it.circulatingSupply.doubleOrZero(),
+            totalSupply = it.totalSupply.doubleOrZero()
         )
     }

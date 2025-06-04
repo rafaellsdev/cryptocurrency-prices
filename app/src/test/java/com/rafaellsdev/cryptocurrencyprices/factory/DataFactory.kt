@@ -14,7 +14,10 @@ fun currencyList() =
             currentPrice = 42938.0,
             priceChangePercentage = -2.56888,
             highPrice = 44444.0,
-            lowPrice = 42008.0
+            lowPrice = 42008.0,
+            totalVolume = 5000000.0,
+            circulatingSupply = 18000000.0,
+            totalSupply = 21000000.0
         )
     )
 
