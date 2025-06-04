@@ -4,6 +4,7 @@ import com.rafaellsdev.cryptocurrencyprices.commons.const.URLs.BASE_URL
 import com.rafaellsdev.cryptocurrencyprices.commons.local.AppDatabase
 import com.rafaellsdev.cryptocurrencyprices.commons.local.CurrencyDao
 import com.rafaellsdev.cryptocurrencyprices.commons.local.TrendingCoinDao
+import com.rafaellsdev.cryptocurrencyprices.commons.local.CategoryDao
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CurrencyRepository
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CurrencyRepositoryImp
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.TrendingRepository
@@ -39,7 +40,9 @@ object DataModule {
     @Singleton
     @Provides
     fun provideDatabase(app: BaseApplication): AppDatabase =
-        Room.databaseBuilder(app, AppDatabase::class.java, "prices.db").build()
+        Room.databaseBuilder(app, AppDatabase::class.java, "prices.db")
+            .fallbackToDestructiveMigration()
+            .build()
 
     @Singleton
     @Provides
@@ -50,6 +53,11 @@ object DataModule {
     @Provides
     fun provideTrendingCoinDao(database: AppDatabase): TrendingCoinDao =
         database.trendingCoinDao()
+
+    @Singleton
+    @Provides
+    fun provideCategoryDao(database: AppDatabase): CategoryDao =
+        database.categoryDao()
 
     @Singleton
     @Provides
@@ -90,8 +98,11 @@ object DataModule {
 
     @Singleton
     @Provides
-    fun provideCategoryRepository(categoryService: CategoryService): CategoryRepository =
-        CategoryRepositoryImp(categoryService)
+    fun provideCategoryRepository(
+        categoryService: CategoryService,
+        categoryDao: CategoryDao
+    ): CategoryRepository =
+        CategoryRepositoryImp(categoryService, categoryDao)
 
     @Singleton
     @Provides
