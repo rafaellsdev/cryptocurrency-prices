@@ -12,8 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.rafaellsdev.cryptocurrencyprices.commons.ext.observe
 import com.rafaellsdev.cryptocurrencyprices.commons.model.Currency
+import com.rafaellsdev.cryptocurrencyprices.commons.model.TrendingCoin
 import com.rafaellsdev.cryptocurrencyprices.databinding.HomeActivityBinding
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.adapters.CurrenciesAdapter
+import com.rafaellsdev.cryptocurrencyprices.feature.home.view.adapters.TrendingAdapter
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.components.CurrencyDetailsBottomSheet
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.components.ErrorView
 import com.rafaellsdev.cryptocurrencyprices.R
@@ -28,7 +30,9 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
     private val viewModel: HomeViewModel by viewModels()
     private var currencyDialog: BottomSheetDialog? = null
     private lateinit var currenciesAdapter: CurrenciesAdapter
+    private lateinit var trendingAdapter: TrendingAdapter
     private var allCurrencies: List<Currency> = emptyList()
+    private var trendingList: List<TrendingCoin> = emptyList()
     private var currentQuery: String? = null
     private var sortOption: SortOption = SortOption.MARKET_CAP
 
@@ -40,8 +44,11 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
         setupSearchView()
         setupSortSpinner()
         setupCurrencySpinner()
+        setupTrendingRecycler()
+        observeTrending()
         observeHomeState()
         requestHomeData()
+        viewModel.loadTrendingCoins()
     }
 
     private fun setListeners() {
@@ -118,6 +125,21 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
         }
     }
 
+    private fun setupTrendingRecycler() {
+        trendingAdapter = TrendingAdapter(emptyList())
+        with(binding.rcvTrending) {
+            layoutManager = LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = trendingAdapter
+        }
+    }
+
+    private fun observeTrending() {
+        observe(viewModel.trendingCoins) {
+            trendingList = it
+            trendingAdapter.updateTrending(it)
+        }
+    }
+
     private fun observeHomeState() {
         observe(viewModel.homeViewState) {
             when (it) {
@@ -153,6 +175,10 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
             currenciesAdapter.setCurrencyCode(viewModel.getFiatCurrency().uppercase())
             sortAndFilterCurrencies(currentQuery)
         }
+    }
+
+    private fun showTrendingCoins(coins: List<TrendingCoin>) {
+        trendingAdapter.updateTrending(coins)
     }
 
     private fun showLoadingState() {

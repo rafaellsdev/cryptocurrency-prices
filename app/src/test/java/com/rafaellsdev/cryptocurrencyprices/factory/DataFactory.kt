@@ -1,6 +1,7 @@
 package com.rafaellsdev.cryptocurrencyprices.factory
 
 import com.rafaellsdev.cryptocurrencyprices.commons.model.Currency
+import com.rafaellsdev.cryptocurrencyprices.commons.model.TrendingCoin
 
 fun currencyList() =
     listOf(
@@ -14,5 +15,15 @@ fun currencyList() =
             priceChangePercentage = -2.56888,
             highPrice = 44444.0,
             lowPrice = 42008.0
+        )
+    )
+
+fun trendingList() =
+    listOf(
+        TrendingCoin(
+            id = "bitcoin",
+            symbol = "btc",
+            name = "Bitcoin",
+            image = "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579"
         )
     )

@@ -25,4 +25,6 @@
         <item>EUR</item>
         <item>USD</item>
     </string-array>
+
+    <string name="trending">Tendências</string>
 </resources>
