@@ -41,7 +41,12 @@ class PriceChartActivity : AppCompatActivity() {
             binding.spinnerPeriod.adapter = adapter
         }
         binding.spinnerPeriod.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: android.view.View?, position: Int, idView: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: android.view.View?,
+                position: Int,
+                idView: Long
+            ) {
                 val days = when (position) {
                     1 -> 7
                     2 -> 30
@@ -57,7 +62,7 @@ class PriceChartActivity : AppCompatActivity() {
     private fun observeChartData() {
         viewModel.chartData.observe(this) { list ->
             val entries = list.map { Entry(it.first.toFloat(), it.second.toFloat()) }
-            val dataSet = LineDataSet(entries, title)
+            val dataSet = LineDataSet(entries, title.toString())
             val lineData = LineData(dataSet)
             binding.lineChart.data = lineData
             binding.lineChart.invalidate()
