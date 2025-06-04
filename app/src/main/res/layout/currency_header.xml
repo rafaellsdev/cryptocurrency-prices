@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="72dp"
-        android:background="@color/white"
+        android:background="?attr/colorSurface"
         app:layout_constraintBottom_toTopOf="@id/toolbar_shadow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
