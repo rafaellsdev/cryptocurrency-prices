@@ -1,15 +1,16 @@
 package com.rafaellsdev.cryptocurrencyprices.feature.home.view.activities
 
 import android.os.Bundle
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.rafaellsdev.cryptocurrencyprices.R
 import com.rafaellsdev.cryptocurrencyprices.commons.ext.observe
 import com.rafaellsdev.cryptocurrencyprices.commons.model.Currency
 import com.rafaellsdev.cryptocurrencyprices.commons.model.TrendingCoin
@@ -18,9 +19,8 @@ import com.rafaellsdev.cryptocurrencyprices.feature.home.view.adapters.Currencie
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.adapters.TrendingAdapter
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.components.CurrencyDetailsBottomSheet
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.components.ErrorView
-import com.rafaellsdev.cryptocurrencyprices.R
-import com.rafaellsdev.cryptocurrencyprices.feature.home.view.state.HomeViewState
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.model.SortOption
+import com.rafaellsdev.cryptocurrencyprices.feature.home.view.state.HomeViewState
 import com.rafaellsdev.cryptocurrencyprices.feature.home.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -56,13 +56,11 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
 
     private fun setListeners() {
         binding.errorViewContent.setup(this)
-        binding.toolbar.setOnClickListener {
-            onBackPressed()
-        }
     }
 
     private fun setupSearchView() {
-        binding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+        binding.searchView.setOnQueryTextListener(object :
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 sortAndFilterCurrencies(query)
                 return true
@@ -85,7 +83,12 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
             binding.spinnerSort.adapter = adapter
         }
         binding.spinnerSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 sortOption = when (position) {
                     1 -> SortOption.PRICE
                     2 -> SortOption.CHANGE_24H
@@ -115,17 +118,23 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
             binding.spinnerCurrency.setSelection(index)
         }
 
-        binding.spinnerCurrency.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                val selected = parent.getItemAtPosition(position) as String
-                if (selected.lowercase() != viewModel.getFiatCurrency()) {
-                    viewModel.setFiatCurrency(selected.lowercase())
-                    requestHomeData()
+        binding.spinnerCurrency.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val selected = parent.getItemAtPosition(position) as String
+                    if (selected.lowercase() != viewModel.getFiatCurrency()) {
+                        viewModel.setFiatCurrency(selected.lowercase())
+                        requestHomeData()
+                    }
                 }
-            }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {}
-        }
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
     }
 
     private fun setupCategorySpinner() {
@@ -140,20 +149,28 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
             binding.spinnerCategory.adapter = adapter
         }
 
-        binding.spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                selectedCategory = if (position == 0) null else viewModel.coinCategories.value?.get(position - 1)?.id
-                requestHomeData()
-            }
+        binding.spinnerCategory.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    selectedCategory =
+                        if (position == 0) null else viewModel.coinCategories.value?.get(position - 1)?.id
+                    requestHomeData()
+                }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {}
-        }
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
     }
 
     private fun setupTrendingRecycler() {
         trendingAdapter = TrendingAdapter(emptyList())
         with(binding.rcvTrending) {
-            layoutManager = LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager =
+                LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false)
             adapter = trendingAdapter
         }
     }
@@ -282,7 +299,7 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
         } else {
             allCurrencies.filter {
                 it.name!!.contains(query, ignoreCase = true) ||
-                    it.symbol.contains(query, ignoreCase = true)
+                        it.symbol.contains(query, ignoreCase = true)
             }
         }
 
