@@ -7,6 +7,8 @@ data class CurrencyResponse(
     val symbol: String?,
     val name: String?,
     val image: String?,
+    @SerializedName("market_cap")
+    val marketCap: Double?,
     @SerializedName("current_price")
     val currentPrice: Double?,
     @SerializedName("price_change_percentage_24h")

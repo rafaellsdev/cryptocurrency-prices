@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.verify
 import com.rafaellsdev.cryptocurrencyprices.factory.currencyList
 import com.rafaellsdev.cryptocurrencyprices.feature.home.repository.CurrencyRepository
+import com.rafaellsdev.cryptocurrencyprices.commons.favorites.FavoritesRepository
 import com.rafaellsdev.cryptocurrencyprices.feature.home.viewmodel.HomeViewModel
 import com.rafaellsdev.cryptocurrencyprices.feature.home.view.state.HomeViewState
 import kotlinx.coroutines.Dispatchers
@@ -38,6 +39,9 @@ class HomeViewModelTest {
     lateinit var repository: CurrencyRepository
 
     @Mock
+    lateinit var favoritesRepository: FavoritesRepository
+
+    @Mock
     lateinit var observer: Observer<HomeViewState>
 
     private lateinit var viewModel: HomeViewModel
@@ -45,7 +49,7 @@ class HomeViewModelTest {
     @Before
     fun setup() {
         Dispatchers.setMain(testDispatcher)
-        viewModel = HomeViewModel(repository)
+        viewModel = HomeViewModel(repository, favoritesRepository)
         viewModel.homeViewState.observeForever(observer)
     }
 

@@ -15,4 +15,9 @@
     <string name="error_title_whoops">Ops!</string>
     <string name="error_message_generic">Ocorreu um erro.</string>
     <string name="error_button_try_again">Tentar novamente</string>
+    <string-array name="sort_options">
+        <item>Valor de mercado</item>
+        <item>Preço</item>
+        <item>Variação 24h</item>
+    </string-array>
 </resources>

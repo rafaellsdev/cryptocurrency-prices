@@ -5,6 +5,7 @@ data class Currency(
     val symbol: String,
     val name: String?,
     val image: String?,
+    val marketCap: Double,
     val currentPrice: Double,
     val priceChangePercentage: Double,
     val highPrice: Double,

@@ -15,4 +15,9 @@
     <string name="error_title_whoops">Whoops!</string>
     <string name="error_message_generic">We have an error.</string>
     <string name="error_button_try_again">Try again</string>
+    <string-array name="sort_options">
+        <item>Market Cap</item>
+        <item>Price</item>
+        <item>24h Change</item>
+    </string-array>
 </resources>
