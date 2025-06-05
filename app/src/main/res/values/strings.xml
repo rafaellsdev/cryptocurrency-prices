@@ -37,4 +37,5 @@
     <string name="total_market_cap">Total Market Cap</string>
     <string name="total_volume">Total Volume</string>
     <string name="market_dominance">Dominance</string>
+    <string name="no_favorites">No favorites selected</string>
 </resources>
