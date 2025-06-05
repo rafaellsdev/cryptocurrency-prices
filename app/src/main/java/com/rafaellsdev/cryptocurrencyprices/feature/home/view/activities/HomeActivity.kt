@@ -6,6 +6,10 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.text.TextWatcher
+import android.text.Editable
+import com.rafaellsdev.cryptocurrencyprices.commons.ext.showKeyboard
+import com.rafaellsdev.cryptocurrencyprices.commons.ext.hideKeyboard
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -59,18 +63,42 @@ class HomeActivity : AppCompatActivity(), ErrorView.ErrorListener {
     }
 
     private fun setupSearchView() {
-        binding.searchView.setOnQueryTextListener(object :
-            androidx.appcompat.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                sortAndFilterCurrencies(query)
-                return true
-            }
+        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1)
+        binding.autoCompleteSearch.setAdapter(adapter)
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                sortAndFilterCurrencies(newText)
-                return true
+        binding.searchContainer.setOnClickListener {
+            binding.autoCompleteSearch.showKeyboard()
+        }
+
+        binding.autoCompleteSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val text = s?.toString()
+                sortAndFilterCurrencies(text)
+                viewModel.searchCoins(text.orEmpty())
             }
+            override fun afterTextChanged(s: Editable?) {}
         })
+
+        binding.autoCompleteSearch.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) binding.autoCompleteSearch.hideKeyboard()
+        }
+
+        binding.autoCompleteSearch.setOnItemClickListener { _, _, position, _ ->
+            val result = viewModel.searchResults.value?.getOrNull(position)
+            val query = result?.symbol ?: ""
+            if (query.isNotBlank()) {
+                binding.autoCompleteSearch.setText(query, false)
+                sortAndFilterCurrencies(query)
+                binding.autoCompleteSearch.hideKeyboard()
+            }
+        }
+
+        observe(viewModel.searchResults) { results ->
+            adapter.clear()
+            adapter.addAll(results.map { "${it.name} (${it.symbol.uppercase()})" })
+            adapter.notifyDataSetChanged()
+        }
     }
 
     private fun setupSortSpinner() {
