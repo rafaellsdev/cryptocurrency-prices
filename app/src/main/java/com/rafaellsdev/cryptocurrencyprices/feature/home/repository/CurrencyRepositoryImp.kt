@@ -36,4 +36,17 @@ class CurrencyRepositoryImp @Inject constructor(
                 }
             }
         }
+
+    override suspend fun getCurrenciesByIds(ids: List<String>): List<Currency> =
+        withContext(Dispatchers.IO) {
+            val currency = currencyPreferenceRepository.getSelectedCurrency()
+            val idParam = ids.joinToString(",")
+            try {
+                discoverService.getCurrenciesByIds(currency = currency, ids = idParam)
+                    .toCurrencyList()
+            } catch (e: Exception) {
+                val local = currencyDao.getCurrenciesByIds(ids).map { it.toDomain() }
+                if (local.isNotEmpty()) local else throw e
+            }
+        }
 }

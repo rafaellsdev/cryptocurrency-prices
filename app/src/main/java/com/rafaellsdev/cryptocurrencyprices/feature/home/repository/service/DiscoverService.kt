@@ -15,4 +15,11 @@ interface DiscoverService {
         @Query("sparkline") sparkline: Boolean = false,
         @Query("category") category: String? = null
     ): List<CurrencyResponse>
+
+    @GET(CURRENCIES_SERVICE)
+    suspend fun getCurrenciesByIds(
+        @Query("vs_currency") currency: String,
+        @Query("ids") ids: String,
+        @Query("sparkline") sparkline: Boolean = false
+    ): List<CurrencyResponse>
 }
